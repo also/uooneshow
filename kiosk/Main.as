@@ -10,6 +10,7 @@ package {
   import flash.events.SecurityErrorEvent;
   import flash.events.HTTPStatusEvent;
   import flash.events.IOErrorEvent;
+  import flash.external.ExternalInterface;
   import flash.media.Camera;
   import flash.media.Video;
   import flash.net.URLLoader;
@@ -32,6 +33,8 @@ package {
       video.attachCamera(camera);
 
       stage.addEventListener(MouseEvent.CLICK, onClick);
+
+      ExternalInterface.addCallback('takeSnapshot', takeSnapshot);
     }
 
     private function captureSnapshot():ByteArray {
@@ -58,8 +61,8 @@ package {
 
     private function completeHandler(event:Event):void {
       var snapshot:Object = JSON.decode(loader.data).snapshot;
-      snapshotPosted(snapshot);
       loader = null;
+      snapshotPosted(snapshot);
     }
 
     private function progressHandler(event:ProgressEvent):void {
@@ -72,7 +75,8 @@ package {
 
     private function httpStatusHandler(event:HTTPStatusEvent):void {
       if (event.status != 200) {
-        errorHandler(event);
+        // TODO why is status 0?
+        //errorHandler(event);
       }
     }
 
@@ -86,17 +90,23 @@ package {
     }
 
     private function onClick(e:MouseEvent):void {
+      takeSnapshot();
+    }
+
+    private function takeSnapshot():Boolean {
       if (loader != null) {
-        trace('ignoring click while posting snapshot')
-        return; // a snapshot is being sent
+        trace('ignoring click while posting snapshot');
+        return false; // a snapshot is being sent
       }
       var bytes:ByteArray = captureSnapshot();
 
       sendSnapshot(bytes);
+      return true;
     }
 
     private function snapshotPosted(snapshot:Object):void {
       trace('snapshot posted: ' + snapshot.id);
+      ExternalInterface.call('snapshotPosted', snapshot);
     }
   }
 }
