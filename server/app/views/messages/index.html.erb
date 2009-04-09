@@ -1,0 +1,28 @@
+<style type="text/css">
+* {
+  font-family: helvetica;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.message_text {
+  margin-left: 170px;
+}
+</style>
+<ul>
+<% @messages.each do |message| %><li>
+  <div class="snapshot"><% if message.snapshot %><img src="<%= message.snapshot.path %>" alt="Snapshot"/><% end %></div>
+  <div><div class="message_text"><%=h message.text %></div></div>
+</li>
+<% end %></ul>
