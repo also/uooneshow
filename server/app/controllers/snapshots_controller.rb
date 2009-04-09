@@ -4,8 +4,7 @@ class SnapshotsController < ApplicationController
   end
 
   def create
-    @snapshot = Snapshot.create
-    File.open("#{RAILS_ROOT}/public/#{@snapshot.path}", 'w') {|f| f.write(request.body.string) }
-    render :nothing => true
+    @snapshot = Snapshot.create :data => request.body.string
+    render :json => @snapshot
   end
 end
