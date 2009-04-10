@@ -15,3 +15,7 @@ var snapshotPosted = function(snapshot) {
   $('snapshot').update(new Element('img', {src: '/snapshots/' + snapshot.id + '.png'}));
   $('message_snapshot_id').value = snapshot.id;
 };
+
+var initLive = function(flashVars) {
+  swfobject.embedSWF('/swfs/display.swf', 'live_display', 640, 480, '9.0.0', null, flashVars);
+};

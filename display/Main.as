@@ -48,7 +48,7 @@ package {
       message = new Message(string, textFormat);
       message.y = messageY;
       messageSprite.addChild(message);
-      messageY += message.textHeight + 20;
+      messageY += message.textHeight + 10;
     }
 
     private function onEnterFrame(e:Event):void {
