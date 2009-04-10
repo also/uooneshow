@@ -2,8 +2,8 @@ var trace = function(message) {
   console.log(message);
 };
 
-var initCamera = function() {
-  swfobject.embedSWF('/swfs/camera.swf', 'camera', 320, 240, '9.0.0', null, null, {allowScriptAccess: 'true'});
+var initCamera = function(snapshotUrl) {
+  swfobject.embedSWF('/swfs/camera.swf', 'camera', 320, 240, '9.0.0', null, {snapshotUrl: snapshotUrl});
   $('snapshot').observe('click', function(event) {
     event.stop();
     $('camera').takeSnapshot();

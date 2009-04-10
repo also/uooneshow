@@ -24,8 +24,10 @@ package {
     private var video:Video;
 
     private var loader:URLLoader;
+    private var snapshotUrl:String;
 
     public function Main() {
+      snapshotUrl = root.loaderInfo.parameters.snapshotUrl;
       camera = Camera.getCamera();
       camera.setMode(320, 240, 29);
       video = new Video(320, 240);
@@ -44,7 +46,8 @@ package {
     }
 
     private function sendSnapshot(bytes:ByteArray):void {
-      var request:URLRequest = new URLRequest('http://localhost:3000/snapshots');
+      // TODO show error if snapshot url is null
+      var request:URLRequest = new URLRequest(snapshotUrl);
       request.method = URLRequestMethod.POST;
       request.requestHeaders = [new URLRequestHeader("Content-Type", "image/png")];
       request.data = bytes;
@@ -60,7 +63,7 @@ package {
     }
 
     private function completeHandler(event:Event):void {
-      var snapshot:Object = JSON.decode(loader.data).snapshot;
+      var snapshot:Object = JSON.decode(loader.data);
       loader = null;
       snapshotPosted(snapshot);
     }
