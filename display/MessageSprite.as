@@ -13,10 +13,11 @@ package {
 
     public function MessageSprite(message:Object, textFormat:TextFormat) {
       var background:Shape = new Shape();
+      background.x = 10;
       addChild(background);
 
       text = new TextField();
-      text.x = 180;
+      text.x = 190;
       text.y = 10;
       text.defaultTextFormat = textFormat;
       text.text = message.text;
@@ -31,7 +32,7 @@ package {
 
       if (message.snapshot_id) {
         imageLoader = new Loader();
-        imageLoader.x = 10;
+        imageLoader.x = 20;
         imageLoader.y = 10;
         imageLoader.scaleX = imageLoader.scaleY = 0.5;
         imageLoader.load(new URLRequest('http://localhost:3000/snapshots/' + message.snapshot_id + '.png'));
@@ -39,7 +40,7 @@ package {
       }
       else {
         var imagePlaceholder:Shape = new Shape();
-        imagePlaceholder.x = 10;
+        imagePlaceholder.x = 20;
         imagePlaceholder.y = 10;
         imagePlaceholder.graphics.beginFill(0x333333);
         imagePlaceholder.graphics.drawRect(0, 0, 160, 120);
