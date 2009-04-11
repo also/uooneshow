@@ -28,7 +28,7 @@ package {
       var messages:Array = JSON.decode(loader.data);
 
       for each (var message in messages) {
-        animation.addMessage(message.text);
+        animation.addMessage(message);
       }
     }
   }
