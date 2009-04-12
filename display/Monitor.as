@@ -1,17 +1,16 @@
 package {
   import flash.net.*;
   import flash.events.Event;
+  import flash.events.EventDispatcher;
   import com.adobe.serialization.json.JSON;
 
-  class Monitor {
+  class Monitor extends EventDispatcher {
     private var loader:URLLoader;
-    private var animation:Main;
     private var lastId:String;
 
     private var messagesUrl:String;
 
     public function Monitor(animation:Main) {
-      this.animation = animation;
       // TODO show error if messages url is null
       messagesUrl = animation.root.loaderInfo.parameters.messagesUrl;
       lastId = "0";
@@ -28,7 +27,8 @@ package {
       var messages:Array = JSON.decode(loader.data);
 
       for each (var message in messages) {
-        animation.addMessage(message);
+        var e:MessageReceivedEvent = new MessageReceivedEvent(message);
+        dispatchEvent(e);
       }
     }
   }

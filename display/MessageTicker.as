@@ -31,10 +31,10 @@ package {
       messageX = 0;
     }
 
-    public function addMessage(message:Object):void {
+    public function messageReceived(messageEvent:MessageReceivedEvent):void {
       var text:TextField = new TextField();
       text.defaultTextFormat = textFormat;
-      text.text = message.text;
+      text.text = messageEvent.message.text;
       text.width = text.textWidth + 5;
       text.x = messageX;
       messageX += text.width + SPACING;

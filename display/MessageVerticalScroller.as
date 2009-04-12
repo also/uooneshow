@@ -30,8 +30,8 @@ package {
       messageY = 0;
     }
 
-    public function addMessage(message:Object):void {
-      var messageSprite:MessageSprite = new MessageSprite(message, textFormat);
+    public function messageReceived(messageEvent:MessageReceivedEvent):void {
+      var messageSprite:MessageSprite = new MessageSprite(messageEvent.message, textFormat);
       messageSprite.y = messageY;
       addChild(messageSprite);
       messageY += messageSprite.offsetHeight + 30;

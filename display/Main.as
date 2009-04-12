@@ -24,12 +24,9 @@ package {
       addChild(messageTicker);
 
       monitor = new Monitor(this);
+      monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
+      monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.update();
-    }
-
-    public function addMessage(message:Object):void {
-      messageScroller.addMessage(message);
-      messageTicker.addMessage(message);
     }
   }
 }
