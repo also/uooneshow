@@ -1,7 +1,4 @@
 package {
-  import fl.transitions.Tween;
-  import fl.transitions.easing.Regular;
-
   import flash.display.Loader;
   import flash.display.Shape;
   import flash.display.Sprite;
@@ -25,6 +22,7 @@ package {
     private var highlightTween:Tween;
 
     public function MessageSprite(message:Object, textFormat:TextFormat) {
+      cacheAsBitmap = true;
       var background:Shape = new Shape();
       background.x = PADDING;
       addChild(background);
@@ -71,32 +69,10 @@ package {
         imagePlaceholder.graphics.endFill();
         addChild(imagePlaceholder);
       }
-
-      addEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
 
     public function get offsetHeight() {
       return Math.max(text.textHeight, IMAGE_HEIGHT) + PADDING * 2;
-    }
-
-    public function set highlight(value:Boolean) {
-      if (value) {
-        highlightTween = new Tween(backgroundHighlight, 'alpha', Regular.easeInOut, 0, 1, 1, true);
-      }
-      else {
-        highlightTween.yoyo();
-        highlightTween = null;
-      }
-    }
-
-    private function onEnterFrame(e:Event):void {
-      var y:int = globalToLocal(new Point(0, 320)).y;
-      if (y > 0 && y < offsetHeight && highlightTween == null) {
-        highlight = true;
-      }
-      else if (y >= offsetHeight && highlightTween != null) {
-        highlight = false;
-      }
     }
   }
 }
