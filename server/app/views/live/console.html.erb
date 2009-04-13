@@ -1,0 +1,44 @@
+<%= javascript_include_tag 'swfobject' %>
+<%= javascript_include_tag 'rjs' %>
+<%= javascript_include_tag :defaults %>
+<style type="text/css">
+#log {
+  width: 500px;
+  height: 300px;
+  overflow: auto;
+}
+
+#input {
+  width: 500px;
+}
+</style>
+
+<pre id="log"></pre>
+<form id="input_form"><input type="text" id="input"/></form>
+
+<% javascript_tag do %>
+rjs.swfUrl = '/swfs/rjs.swf';
+rjs.connect('localhost', 1843, {
+  onSocketConnect: function(callback) {
+    rjs.send('server subscribe *');
+  },
+
+  onEvent: function(callback) {
+    console.log(callback);
+  },
+
+  onReceive: function(data) {
+    var logElt = $('log');
+    $('log').insert(data + '\n');
+    logElt.scrollTop = logElt.scrollHeight;
+  }
+});
+
+$('input_form').observe('submit', function(event) {
+  event.stop();
+  var value = $('input').value;
+  rjs.send(value);
+
+  $('input').value = '';
+});
+<% end %>

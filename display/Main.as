@@ -32,6 +32,8 @@ package {
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
+
+      new Connector().connect('localhost', 1843);
     }
   }
 }
