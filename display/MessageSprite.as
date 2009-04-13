@@ -59,7 +59,7 @@ package {
         imageLoader.x = PADDING * 2;
         imageLoader.y = PADDING;
         imageLoader.scaleX = imageLoader.scaleY = 0.5;
-        imageLoader.load(new URLRequest('http://localhost:3000/snapshots/' + message.snapshot_id + '.png'));
+        imageLoader.load(new URLRequest(Main.baseUrl + 'snapshots/' + message.snapshot_id + '.png'));
         addChild(imageLoader);
       }
       else {

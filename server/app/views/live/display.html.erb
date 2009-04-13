@@ -3,4 +3,4 @@
 
 <div id="live_display"></div>
 
-<%= javascript_tag "initLive({messagesUrl: #{messages_url(:format => :json).to_json}})" %>
+<%= javascript_tag "initLive({baseUrl: #{root_url.to_json}})" %>

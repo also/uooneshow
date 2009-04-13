@@ -9,7 +9,7 @@ package {
       _message = message;
     }
 
-    public function get message() {
+    public function get message():Object {
       return _message;
     }
   }

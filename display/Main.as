@@ -4,11 +4,15 @@ package {
   import flash.events.Event;
 
   public class Main extends Sprite {
+    public static var baseUrl:String;
+
     private var messageTicker:MessageTicker;
     private var messageScroller:MessageVerticalScroller;
     private var monitor:Monitor;
 
     public function Main() {
+      Main.baseUrl = root.loaderInfo.parameters.baseUrl || 'http://localhost:3000/';
+
       messageScroller = new MessageVerticalScroller();
       addChild(messageScroller);
 

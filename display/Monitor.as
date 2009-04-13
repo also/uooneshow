@@ -1,8 +1,10 @@
 package {
-  import flash.net.*;
+  import com.adobe.serialization.json.JSON;
+
   import flash.events.Event;
   import flash.events.EventDispatcher;
-  import com.adobe.serialization.json.JSON;
+  import flash.net.URLLoader;
+  import flash.net.URLRequest;
 
   class Monitor extends EventDispatcher {
     private var loader:URLLoader;
@@ -12,7 +14,7 @@ package {
 
     public function Monitor(animation:Main) {
       // TODO show error if messages url is null
-      messagesUrl = animation.root.loaderInfo.parameters.messagesUrl;
+      messagesUrl = Main.baseUrl +  'messages.json';
       lastId = "0";
       loader = new URLLoader();
       loader.addEventListener(Event.COMPLETE, onComplete);
