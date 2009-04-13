@@ -19,7 +19,6 @@ package {
     private var text:TextField;
     private var imageLoader:Loader;
     private var backgroundHighlight:Shape;
-    private var highlightTween:Tween;
 
     public function MessageSprite(message:Object, textFormat:TextFormat) {
       cacheAsBitmap = true;

@@ -13,19 +13,21 @@ package {
     private var maxId:String;
 
     private var messagesUrl:String;
+    private var timer:Timer;
 
-    public function Monitor(animation:Main) {
+    public function Monitor(interval:int) {
       // TODO show error if messages url is null
       messagesUrl = Main.baseUrl +  'messages.json';
       maxId = "0";
       loader = new URLLoader();
       loader.addEventListener(Event.COMPLETE, onComplete);
+
+      timer = new Timer(interval);
+      timer.addEventListener('timer', timerHandler);
     }
 
     public function start():void {
       update();
-      var timer:Timer = new Timer(5000);
-      timer.addEventListener('timer', timerHandler);
       timer.start();
     }
 

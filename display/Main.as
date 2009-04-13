@@ -11,7 +11,8 @@ package {
     private var monitor:Monitor;
 
     public function Main() {
-      Main.baseUrl = root.loaderInfo.parameters.baseUrl || 'http://localhost:3000/';
+      var options:Object = root.loaderInfo.parameters;
+      Main.baseUrl = options.baseUrl || 'http://localhost:3000/';
 
       messageScroller = new MessageVerticalScroller();
       addChild(messageScroller);
@@ -27,7 +28,7 @@ package {
       messageTicker.y = stage.stageHeight - 45;
       addChild(messageTicker);
 
-      monitor = new Monitor(this);
+      monitor = new Monitor(options.monitorInterval || 5000);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
