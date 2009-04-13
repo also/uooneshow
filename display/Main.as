@@ -30,7 +30,7 @@ package {
       monitor = new Monitor(this);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
-      monitor.update();
+      monitor.start();
     }
   }
 }

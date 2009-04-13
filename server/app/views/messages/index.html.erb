@@ -21,7 +21,7 @@ li {
 }
 </style>
 <ul>
-<% @messages.each do |message| %><li>
+<% @messages.each do |message| %><li id="message_<%= message.id %>">
   <div class="snapshot"><% if message.snapshot %><img src="<%= message.snapshot.path %>" alt="Snapshot"/><% end %></div>
   <div><div class="message_text"><%=h message.text %></div></div>
 </li>
