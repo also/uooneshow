@@ -59,13 +59,15 @@ public class LiveServer extends RjsHandlerAdapter {
 			throw new RuntimeException("Invalid message: " + message);
 		}
 		String path = message.substring(0, spaceIndex);
-		String targetMessage = message.substring(spaceIndex + 1);
 		if (path.equals(SERVER_PATH)) {
+			String targetMessage = message.substring(spaceIndex + 1);
 			serverMessageReceived(client, targetMessage);
 		}
-		HashSet<RjsClient> pathListeners = listeners.get(path);
-		if (pathListeners != null) {
-			sendMessage(pathListeners, targetMessage);
+		else {
+			HashSet<RjsClient> pathListeners = listeners.get(path);
+			if (pathListeners != null) {
+				sendMessage(pathListeners, message);
+			}
 		}
 		sendMessage(globalListeners, message);
 	}
