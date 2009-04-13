@@ -25,7 +25,7 @@ package {
     }
 
     public function reset():void {
-      scrollRect = new Rectangle(0, -stage.stageHeight + 30, stage.stageWidth, stage.stageHeight);
+      scrollRect = new Rectangle(0, -stage.stageHeight + 50, stage.stageWidth, stage.stageHeight);
       scroll();
       started = true;
     }
@@ -34,15 +34,15 @@ package {
       var scrollEndY:int = messageY;
       if (childIndex < numChildren) {
         var sprite:MessageSprite = MessageSprite(getChildAt(childIndex++));
-        scrollEndY = scrollRect.y + sprite.offsetHeight + 30;
+        scrollEndY = scrollRect.y + sprite.offsetHeight + 10;
       }
-      var tween:Tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollRect.y, scrollEndY, 1, true);
+      var tween:Tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, 1, true);
       tween.addEventListener('motionFinish', scrollEnd);
     }
 
     private function scrollEnd(e:Event):void {
       if (scrollY >= messageY) {
-        scrollY = -stage.stageHeight + 30;
+        scrollY = -stage.stageHeight + 50;
         childIndex = 0;
       }
       var timer:Timer = new Timer(2000, 1);
@@ -68,7 +68,7 @@ package {
       var messageSprite:MessageSprite = new MessageSprite(messageEvent.message, textFormat);
       messageSprite.y = messageY;
       addChild(messageSprite);
-      messageY += messageSprite.offsetHeight + 30;
+      messageY += messageSprite.offsetHeight + 10;
       if (!started) {
         reset();
       }
