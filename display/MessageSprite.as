@@ -26,11 +26,6 @@ package {
       background.x = PADDING;
       addChild(background);
 
-      backgroundHighlight = new Shape();
-      backgroundHighlight.x = PADDING;
-      backgroundHighlight.alpha = 0;
-      addChild(backgroundHighlight);
-
       text = new TextField();
       text.x = IMAGE_WIDTH + PADDING * 3;
       text.y = PADDING;
@@ -44,12 +39,6 @@ package {
       background.graphics.beginFill(0xCCCCCC);
       background.graphics.drawRect(0, 0, text.width + IMAGE_WIDTH + PADDING * 3, offsetHeight);
       background.graphics.endFill();
-
-      backgroundHighlight.graphics.beginFill(0xFFFFFF);
-      backgroundHighlight.graphics.drawRect(
-        HIGHLIGHT_BORDER_WIDTH, HIGHLIGHT_BORDER_WIDTH,
-        background.width - HIGHLIGHT_BORDER_WIDTH * 2, background.height - HIGHLIGHT_BORDER_WIDTH * 2);
-      backgroundHighlight.graphics.endFill();
 
       if (message.snapshot_id) {
         imageLoader = new Loader();
