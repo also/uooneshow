@@ -9,13 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090409062719) do
+ActiveRecord::Schema.define(:version => 20090415032337) do
 
   create_table "messages", :force => true do |t|
     t.string   "text"
     t.integer  "snapshot_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "source"
+    t.string   "remote_id"
   end
 
   create_table "snapshots", :force => true do |t|
