@@ -50,6 +50,7 @@ public class LiveServer extends RjsHandlerAdapter {
 		for (String path : getClientPaths(client)) {
 			listeners.get(path).remove(client);
 		}
+		globalListeners.remove(client);
 	}
 
 	@Override
@@ -59,6 +60,7 @@ public class LiveServer extends RjsHandlerAdapter {
 			throw new RuntimeException("Invalid message: " + message);
 		}
 		String path = message.substring(0, spaceIndex);
+		sendMessage(globalListeners, message);
 		if (path.equals(SERVER_PATH)) {
 			String targetMessage = message.substring(spaceIndex + 1);
 			serverMessageReceived(client, targetMessage);
@@ -69,7 +71,6 @@ public class LiveServer extends RjsHandlerAdapter {
 				sendMessage(pathListeners, message);
 			}
 		}
-		sendMessage(globalListeners, message);
 	}
 
 	private static void sendMessage(Collection<RjsClient> clients, String message) {
