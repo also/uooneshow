@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>one show</title>
+<title>one show uo<%= ": #{@page_title}" if @page_title %></title>
 <style type="text/css">
 body {
   margin: 0;
@@ -38,6 +38,7 @@ textarea.message_text {
   outline-style: none;
 }
 </style>
+<%= yield :head %>
 </head>
 <body>
 <%= yield %>
