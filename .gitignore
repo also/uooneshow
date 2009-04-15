@@ -1,0 +1,12 @@
+.DS_Store
+AC_RunActiveContent.js
+*.swf
+server/public/snapshots
+server/log
+server/db/*.sqlite3
+camera/camera.html
+display/display.html
+*.class
+.classpath
+.project
+live-server/target
