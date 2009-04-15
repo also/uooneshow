@@ -12,25 +12,46 @@
 #input {
   width: 500px;
 }
+
+.event {
+  color: #0000ff;
+}
+.sent {
+  color: #888888;
+}
 </style>
 
 <pre id="log"></pre>
 <form id="input_form"><input type="text" id="input"/></form>
 
 <% javascript_tag do %>
+var logElt = $('log');
+
+var onEvent = function(callback) {
+  logElt.insert(new Element('span', {'class': 'event'}).update(callback));
+  logElt.insert('\n');
+}
+
 rjs.swfUrl = '/swfs/rjs.swf';
+
+var send = function(message) {
+  logElt.insert(new Element('span', {'class': 'sent'}).update(message));
+  logElt.insert('\n');
+
+  rjs.send(message);
+};
+
+onEvent('connecting');
 rjs.connect('localhost', 1843, {
   onSocketConnect: function(callback) {
-    rjs.send('server subscribe *');
+    onEvent('connected');
+    send('server subscribe *');
   },
 
-  onEvent: function(callback) {
-    console.log(callback);
-  },
+  onEvent: onEvent,
 
   onReceive: function(data) {
-    var logElt = $('log');
-    $('log').insert(data + '\n');
+    logElt.insert(data + '\n');
     logElt.scrollTop = logElt.scrollHeight;
   }
 });
@@ -38,7 +59,8 @@ rjs.connect('localhost', 1843, {
 $('input_form').observe('submit', function(event) {
   event.stop();
   var value = $('input').value;
-  rjs.send(value);
+
+  send(value);
 
   $('input').value = '';
 });
