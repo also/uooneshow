@@ -11,7 +11,7 @@ class Message < ActiveRecord::Base
     response_string = open("http://search.twitter.com/search.json?tag=oneshow&rpp=100&since_id=#{max_twitter_id}").read
     response = ActiveSupport::JSON.decode(response_string)
     response['results'].collect do |tweet|
-      Message.create :source => 'twitter', :remote_id => tweet['id'], :text => tweet['text']
+      Message.create :source => 'twitter', :remote_id => tweet['id'], :text => tweet['text'], :profile_image_url => tweet['profile_image_url']
     end
   end
 end

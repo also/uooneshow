@@ -40,12 +40,21 @@ package {
       background.graphics.drawRect(0, 0, text.width + IMAGE_WIDTH + PADDING * 3, offsetHeight);
       background.graphics.endFill();
 
+      var imageUrl:String;
+
       if (message.snapshot_id) {
+        imageUrl = Main.baseUrl + 'snapshots/' + message.snapshot_id + '.png';
+      }
+      else if (message.profile_image_url) {
+        imageUrl = message.profile_image_url;
+      }
+
+      if (imageUrl) {
         imageLoader = new Loader();
         imageLoader.x = PADDING * 2;
         imageLoader.y = PADDING;
-        imageLoader.scaleX = imageLoader.scaleY = 0.5;
-        imageLoader.load(new URLRequest(Main.baseUrl + 'snapshots/' + message.snapshot_id + '.png'));
+        //imageLoader.scaleX = imageLoader.scaleY = 0.5;
+        imageLoader.load(new URLRequest(imageUrl));
         addChild(imageLoader);
       }
       else {
