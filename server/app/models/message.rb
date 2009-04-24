@@ -14,4 +14,12 @@ class Message < ActiveRecord::Base
       Message.create :source => 'twitter', :remote_id => tweet['id'], :text => tweet['text'], :profile_image_url => tweet['profile_image_url']
     end
   end
+
+  def image_url
+    if snapshot
+      snapshot.path
+    elsif profile_image_url
+      profile_image_url
+    end
+  end
 end
