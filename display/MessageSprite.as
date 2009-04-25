@@ -3,6 +3,7 @@ package {
   import flash.display.Shape;
   import flash.display.Sprite;
   import flash.events.Event;
+  import flash.events.IOErrorEvent;
   import flash.geom.Point;
   import flash.net.URLRequest;
   import flash.text.TextField;
@@ -17,6 +18,7 @@ package {
 
     private var message:Object;
     private var text:TextField;
+    private var imageUrl:String;
     private var imageLoader:Loader;
     private var backgroundHighlight:Shape;
 
@@ -40,8 +42,6 @@ package {
       background.graphics.drawRect(0, 0, text.width + IMAGE_WIDTH + PADDING * 3, offsetHeight);
       background.graphics.endFill();
 
-      var imageUrl:String;
-
       if (message.snapshot_id) {
         imageUrl = Main.baseUrl + 'snapshots/' + message.snapshot_id + '.png';
       }
@@ -51,6 +51,7 @@ package {
 
       if (imageUrl) {
         imageLoader = new Loader();
+        imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
         imageLoader.x = PADDING * 2;
         imageLoader.y = PADDING;
         //imageLoader.scaleX = imageLoader.scaleY = 0.5;
@@ -66,6 +67,10 @@ package {
         imagePlaceholder.graphics.endFill();
         addChild(imagePlaceholder);
       }
+    }
+
+    private function ioErrorHandler(e:IOErrorEvent):void {
+      // TODO display placeholder?
     }
 
     public function get offsetHeight() {
