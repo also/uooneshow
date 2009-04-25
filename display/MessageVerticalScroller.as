@@ -9,7 +9,6 @@ package {
   import flash.utils.Timer;
 
   class MessageVerticalScroller extends Sprite {
-    private var messageY:int = 0;
     private var textFormat:TextFormat;
     private var childIndex:int = 0;
     private var started:Boolean = false;
@@ -17,7 +16,9 @@ package {
     private var bottom:Sprite;
     private var messages:Array;
     private var messageHeights:Array;
+    // TODO rename. these shouldn't seem like they apply only to the _bottom_ sprite
     private var bottomIndex:int;
+    private var bottomY:int;
     private var currentMessageLength:int;
     private var currentIndex:int;
 
@@ -43,21 +44,28 @@ package {
       }
 
     private function start():void {
-      trace('starting');
       started = true;
       currentIndex = 0;
       bottomIndex = 0;
+      bottomY = 0;
       currentMessageLength = messages.length;
+
+      trace('starting with ' + currentMessageLength + ' messages');
       // start off empty
       bottom = new Sprite();
-      nextScreen();
+      addChild(bottom);
+      nextSet();
       advance();
     }
 
-    private function nextScreen():void {
-      trace('next set')
+    private function nextSet():void {
+      trace('  next set')
+      if (top != null) {
+        removeChild(top);
+      }
       top = bottom;
       var scrollOffset:int = topHeight - stage.stageHeight;
+      trace('  scrollOffset: '+ scrollOffset);
       top.y = 0;
       scrollRect = new Rectangle(0, scrollOffset, stage.stageWidth, stage.stageHeight);
       bottom = new Sprite();
@@ -67,53 +75,55 @@ package {
     }
 
     private function refill():void {
-      var messageY:int = 0;
-
-      while (messageY <= stage.stageHeight && bottomIndex < currentMessageLength) {
+      while (bottomY <= stage.stageHeight && bottomIndex < currentMessageLength) {
         var messageSprite:MessageSprite = new MessageSprite(messages[bottomIndex], textFormat);
-        messageSprite.y = messageY;
+        messageSprite.y = bottomY;
         bottom.addChild(messageSprite);
         messageHeights[bottomIndex] = messageSprite.offsetHeight;
-        messageY += messageSprite.offsetHeight + 10;
+        bottomY += messageSprite.offsetHeight + 10;
         bottomIndex++;
       }
     }
 
     private function advance():void {
-
+      trace('advancing');
       if (currentIndex <= currentMessageLength) {
+        if (scrollY >= topHeight) {
+          nextSet();
+        }
         var scrollEndY:int;
         if (currentIndex == currentMessageLength) {
-          trace('scrolling last message off screen');
-          scrollEndY = bottomHeight;
+          trace('  scrolling last message off screen');
+          scrollEndY = topHeight + bottomY;
         }
         else {
-          trace('advancing to message ' + currentIndex);
+          trace('  advancing to message ' + currentIndex);
           scrollEndY = scrollY + messageHeights[currentIndex];
         }
         currentIndex++;
 
-        trace('scrolling from ' + scrollY + ' to ' + scrollEndY);
+        trace('  scrolling from ' + scrollY + ' to ' + scrollEndY);
         var tween:Tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, 1, true);
         tween.addEventListener('motionFinish', advanceEnd);
-        tween.addEventListener('motionChange', tweenWtf);
-        tween.addEventListener('motionStop', tweenWtf);
-        tween.addEventListener('motionStop', tweenWtf);
-        tween.addEventListener('motionStop', tweenWtf);
-        tween.addEventListener('motionStop', tweenWtf);
+        //tween.addEventListener('motionChange', tweenWtf);
+        //tween.addEventListener('motionStop', tweenWtf);
+        //tween.addEventListener('motionStop', tweenWtf);
+        //tween.addEventListener('motionStop', tweenWtf);
+        //tween.addEventListener('motionStop', tweenWtf);
       }
       else {
-        trace('advanced past last message');
+        trace('  advanced past last message');
         start();
       }
     }
 
     private function tweenWtf(e:Event):void {
-      //trace(e.type);
+      trace(e.type);
       //trace(new Error().getStackTrace());
     }
 
     private function advanceEnd(e:Event):void {
+      trace('finished advancing');
       var timer:Timer = new Timer(2000, 1);
       timer.addEventListener('timer', scrollTime);
       timer.start();
