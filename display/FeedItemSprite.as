@@ -14,7 +14,6 @@ package {
     private static const HIGHLIGHT_BORDER_WIDTH:int = PADDING / 2;
     private static const IMAGE_WIDTH:int = 160;
     private static const IMAGE_HEIGHT:int = 120;
-    private static const WIDTH:int = 640;
 
     private var message:Object;
     private var text:TextField;
@@ -22,7 +21,7 @@ package {
     private var imageLoader:Loader;
     private var backgroundHighlight:Shape;
 
-    public function FeedItemSprite(message:Object, textFormat:TextFormat) {
+    public function FeedItemSprite(message:Object, textFormat:TextFormat, displayWidth:int) {
       cacheAsBitmap = true;
       var background:Shape = new Shape();
       background.x = PADDING;
@@ -33,7 +32,7 @@ package {
       text.y = PADDING;
       text.defaultTextFormat = textFormat;
       text.text = message.text;
-      text.width = WIDTH - IMAGE_WIDTH - PADDING * 5;
+      text.width = displayWidth - IMAGE_WIDTH - PADDING * 5;
       text.wordWrap = true;
       text.height = text.textHeight + 5;
       addChild(text);

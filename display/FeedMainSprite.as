@@ -77,7 +77,7 @@ package {
       top = bottom;
       var scrollOffset:int = topHeight - displayHeight;
       top.y = 0;
-      scrollRect = new Rectangle(0, scrollOffset + feedItemSpacing, stage.stageWidth, displayHeight);
+      scrollRect = new Rectangle(0, scrollOffset + feedItemSpacing, displayWidth, displayHeight);
       bottom = new Sprite();
       bottom.y = topHeight + feedItemSpacing;
       addChild(bottom);
@@ -87,7 +87,7 @@ package {
     private function refill():void {
       bottomY = 0;
       while (bottomY <= displayHeight && bottomIndex < currentFeedItemCount) {
-        var feedItemSprite:FeedItemSprite = new FeedItemSprite(feedItems[bottomIndex], textFormat);
+        var feedItemSprite:FeedItemSprite = new FeedItemSprite(feedItems[bottomIndex], textFormat, displayWidth);
         feedItemSprite.y = bottomY;
         bottom.addChild(feedItemSprite);
         feedItemHeights[bottomIndex] = feedItemSprite.offsetHeight;
