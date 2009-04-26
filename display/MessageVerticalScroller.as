@@ -41,15 +41,16 @@ package {
 
       messages = [];
       messageHeights = [];
+      Main.connector.subscribe('feed', this);
     }
 
-      private function get topHeight():int {
-        return Math.max(top != null ? top.height : 0, displayHeight);
-      }
+    private function get topHeight():int {
+      return Math.max(top != null ? top.height : 0, displayHeight);
+    }
 
-      private function get bottomHeight():int {
-        return Math.max(bottom.height, displayHeight);
-      }
+    private function get bottomHeight():int {
+      return Math.max(bottom.height, displayHeight);
+    }
 
     private function start():void {
       started = true;
