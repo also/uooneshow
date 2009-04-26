@@ -18,6 +18,9 @@ package {
       connector = new Connector();
       connector.connect('localhost', 1843);
 
+      var featuredImage:FeaturedImageSprite = new FeaturedImageSprite({url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg'});
+      addChild(featuredImage);
+
       messageScroller = new MessageVerticalScroller();
       addChild(messageScroller);
 
