@@ -7,7 +7,7 @@ package {
     public static var baseUrl:String;
 
     private var messageTicker:MessageTicker;
-    private var messageScroller:MessageVerticalScroller;
+    private var feedSprite:FeedMainSprite;
     private var monitor:Monitor;
     public static var connector:Connector;
 
@@ -21,8 +21,8 @@ package {
       var featuredImage:FeaturedImageSprite = new FeaturedImageSprite({url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg'});
       addChild(featuredImage);
 
-      messageScroller = new MessageVerticalScroller();
-      addChild(messageScroller);
+      feedSprite = new FeedMainSprite();
+      addChild(feedSprite);
 
       var tickerBackground:Shape = new Shape();
       tickerBackground.y = stage.stageHeight - 50;
@@ -36,7 +36,7 @@ package {
       addChild(messageTicker);
 
       monitor = new Monitor(options.monitorInterval || 5000);
-      monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
+      monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
     }

@@ -9,7 +9,7 @@ package {
   import flash.text.TextField;
   import flash.text.TextFormat;
 
-  class MessageSprite extends Sprite {
+  class FeedItemSprite extends Sprite {
     private static const PADDING:int = 10;
     private static const HIGHLIGHT_BORDER_WIDTH:int = PADDING / 2;
     private static const IMAGE_WIDTH:int = 160;
@@ -22,7 +22,7 @@ package {
     private var imageLoader:Loader;
     private var backgroundHighlight:Shape;
 
-    public function MessageSprite(message:Object, textFormat:TextFormat) {
+    public function FeedItemSprite(message:Object, textFormat:TextFormat) {
       cacheAsBitmap = true;
       var background:Shape = new Shape();
       background.x = PADDING;

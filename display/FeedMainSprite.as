@@ -8,39 +8,39 @@ package {
   import flash.text.TextFormat;
   import flash.utils.Timer;
 
-  class MessageVerticalScroller extends Sprite {
+  class FeedMainSprite extends Sprite {
     private var displayHeight:int = 480;
     private var textFormat:TextFormat;
     private var started:Boolean = false;
     private var top:Sprite;
     private var bottom:Sprite;
-    private var messages:Array;
-    private var messageHeights:Array;
+    private var feedItems:Array;
+    private var feedItemHeights:Array;
     // TODO rename. these shouldn't seem like they apply only to the _bottom_ sprite
     private var bottomIndex:int;
     private var bottomY:int;
-    private var currentMessageLength:int;
+    private var currentFeedItemCount:int;
     private var currentIndex:int;
     // JESUS FUCKING CHRIST ADOBE, WHY DIDN'T YOU DOCUMENT THE FACT THAT NO HARD REFERENCES
     // TO THE TWEEN ARE HELD SO IT WILL BE GARBAGE COLLECTED UNLESS I PUT IT IN THIS HERE
     // CLASS VARIABLE.
     private var tween:Tween;
 
-    private var messageSpacing:int = 10;
-    private var messageDisplayTime:int = 2000;
-    private var messageScrollTime:int = 1000;
+    private var feedItemSpacing:int = 10;
+    private var feedItemDisplayTime:int = 2000;
+    private var feedItemScrollTime:int = 1000;
 
-    public function MessageVerticalScroller() {
+    public function FeedMainSprite() {
       cacheAsBitmap = true;
 
       textFormat = new TextFormat();
       textFormat.font = 'Helvetica';
-      textFormat.size = 36;
+      textFormat.size = 18;
       textFormat.color = 0x333333;
       textFormat.bold = true;
 
-      messages = [];
-      messageHeights = [];
+      feedItems = [];
+      feedItemHeights = [];
       Main.connector.subscribe('feed', this);
     }
 
@@ -57,7 +57,7 @@ package {
       currentIndex = 0;
       bottomIndex = 0;
       bottomY = 0;
-      currentMessageLength = messages.length;
+      currentFeedItemCount = feedItems.length;
 
       // start off empty
       bottom = new Sprite();
@@ -73,52 +73,52 @@ package {
       top = bottom;
       var scrollOffset:int = topHeight - displayHeight;
       top.y = 0;
-      scrollRect = new Rectangle(0, scrollOffset + messageSpacing, stage.stageWidth, displayHeight);
+      scrollRect = new Rectangle(0, scrollOffset + feedItemSpacing, stage.stageWidth, displayHeight);
       bottom = new Sprite();
-      bottom.y = topHeight + messageSpacing;
+      bottom.y = topHeight + feedItemSpacing;
       addChild(bottom);
       refill();
     }
 
     private function refill():void {
       bottomY = 0;
-      while (bottomY <= displayHeight && bottomIndex < currentMessageLength) {
-        var messageSprite:MessageSprite = new MessageSprite(messages[bottomIndex], textFormat);
-        messageSprite.y = bottomY;
-        bottom.addChild(messageSprite);
-        messageHeights[bottomIndex] = messageSprite.offsetHeight;
-        bottomY += messageSprite.offsetHeight + messageSpacing;
+      while (bottomY <= displayHeight && bottomIndex < currentFeedItemCount) {
+        var feedItemSprite:FeedItemSprite = new FeedItemSprite(feedItems[bottomIndex], textFormat);
+        feedItemSprite.y = bottomY;
+        bottom.addChild(feedItemSprite);
+        feedItemHeights[bottomIndex] = feedItemSprite.offsetHeight;
+        bottomY += feedItemSprite.offsetHeight + feedItemSpacing;
         bottomIndex++;
       }
     }
 
     private function advance():void {
-      if (currentIndex <= currentMessageLength) {
+      if (currentIndex <= currentFeedItemCount) {
         if (currentIndex == bottomIndex) {
           nextSet();
         }
         var scrollEndY:int;
-        if (currentIndex == currentMessageLength) {
-          // scrolling last message off screen
+        if (currentIndex == currentFeedItemCount) {
+          // scrolling last feed item off screen
           scrollEndY = topHeight + bottomY;
         }
         else {
-          scrollEndY = scrollY + messageHeights[currentIndex] + messageSpacing;
+          scrollEndY = scrollY + feedItemHeights[currentIndex] + feedItemSpacing;
         }
         currentIndex++;
 
-        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, messageScrollTime / 1000, true);
+        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, feedItemScrollTime / 1000, true);
         tween.addEventListener('motionFinish', advanceEnd);
       }
       else {
-        // advanced past last message
+        // advanced past last feed item
         start();
       }
     }
 
     private function advanceEnd(e:Event):void {
       tween = null;
-      var timer:Timer = new Timer(messageDisplayTime, 1);
+      var timer:Timer = new Timer(feedItemDisplayTime, 1);
       timer.addEventListener('timer', scrollTime);
       timer.start();
     }
@@ -138,8 +138,8 @@ package {
     }
 
     public function messageReceived(messageEvent:MessageReceivedEvent):void {
-      messages[messages.length] = messageEvent.message;
-      if (!started && messages.length == 100) {
+      feedItems[feedItems.length] = messageEvent.message;
+      if (!started && feedItems.length == 100) {
         start();
       }
     }
