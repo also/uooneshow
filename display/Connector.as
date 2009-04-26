@@ -7,6 +7,7 @@ package {
 
   public class Connector {
     private var socket:XMLSocket;
+    private var started:Boolean = false;
     private var pathPrefix:String = 'display-';
     private var actionPrefix = 'handle_';
     private var subscribers:Object = {};
@@ -33,6 +34,10 @@ package {
     private function onSocketConnect(event:Event):void {
       // my rjs server requires 'hi' to be the first message received
       send('hi');
+      started = true;
+      for (var path:String in subscribers) {
+        send('server subscribe ' + path);
+      }
       subscribe('connector', this);
       doCallback('onSocketConnect');
     }
@@ -100,7 +105,9 @@ package {
         subscribers[path] = pathSubscribers;
       }
       pathSubscribers[pathSubscribers.length] = subscriber;
-      send('server subscribe ' + path);
+      if (started) {
+        send('server subscribe ' + path);
+      }
     }
   }
 }
