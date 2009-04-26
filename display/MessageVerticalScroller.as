@@ -9,6 +9,7 @@ package {
   import flash.utils.Timer;
 
   class MessageVerticalScroller extends Sprite {
+    private var displayHeight:int = 480;
     private var textFormat:TextFormat;
     private var childIndex:int = 0;
     private var started:Boolean = false;
@@ -26,6 +27,10 @@ package {
     // CLASS VARIABLE.
     private var tween:Tween;
 
+    private var messageSpacing:int = 10;
+    private var messageDisplayTime:int = 2//000;
+    private var messageScrollTime:int = 500;
+
     public function MessageVerticalScroller() {
       cacheAsBitmap = true;
 
@@ -40,11 +45,11 @@ package {
     }
 
       private function get topHeight():int {
-        return Math.max(top != null ? top.height : 0, stage.stageHeight);
+        return Math.max(top != null ? top.height : 0, displayHeight);
       }
 
       private function get bottomHeight():int {
-        return Math.max(bottom.height, stage.stageHeight);
+        return Math.max(bottom.height, displayHeight);
       }
 
     private function start():void {
@@ -68,25 +73,25 @@ package {
         removeChild(top);
       }
       top = bottom;
-      var scrollOffset:int = topHeight - stage.stageHeight;
+      var scrollOffset:int = topHeight - displayHeight;
       trace('  scrollOffset: '+ scrollOffset);
       top.y = 0;
-      scrollRect = new Rectangle(0, scrollOffset, stage.stageWidth, stage.stageHeight);
+      scrollRect = new Rectangle(0, scrollOffset, stage.stageWidth, displayHeight);
       bottom = new Sprite();
-      bottom.y = topHeight;
+      bottom.y = topHeight + messageSpacing;
       addChild(bottom);
       refill();
     }
 
     private function refill():void {
-      bottomY = 10;
-      while (bottomY <= stage.stageHeight && bottomIndex < currentMessageLength) {
+      bottomY = 0;
+      while (bottomY <= displayHeight && bottomIndex < currentMessageLength) {
         trace('  adding message ' + bottomIndex);
         var messageSprite:MessageSprite = new MessageSprite(messages[bottomIndex], textFormat);
         messageSprite.y = bottomY;
         bottom.addChild(messageSprite);
         messageHeights[bottomIndex] = messageSprite.offsetHeight;
-        bottomY += messageSprite.offsetHeight + 10;
+        bottomY += messageSprite.offsetHeight + messageSpacing;
         bottomIndex++;
       }
     }
@@ -94,7 +99,7 @@ package {
     private function advance():void {
       trace('advancing');
       if (currentIndex <= currentMessageLength) {
-        if (scrollY >= topHeight) {
+        if (currentIndex == bottomIndex) {
           nextSet();
         }
         var scrollEndY:int;
@@ -109,7 +114,7 @@ package {
         currentIndex++;
 
         trace('  scrolling from ' + scrollY + ' to ' + scrollEndY);
-        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, 1, true);
+        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, messageScrollTime / 1000, true);
         tween.addEventListener('motionFinish', advanceEnd);
       }
       else {
@@ -121,7 +126,7 @@ package {
     private function advanceEnd(e:Event):void {
       trace('finished advancing');
       tween = null;
-      var timer:Timer = new Timer(2000, 1);
+      var timer:Timer = new Timer(messageDisplayTime, 1);
       timer.addEventListener('timer', scrollTime);
       timer.start();
     }
@@ -142,7 +147,7 @@ package {
 
     public function messageReceived(messageEvent:MessageReceivedEvent):void {
       messages[messages.length] = messageEvent.message;
-      if (!started) {
+      if (!started && messages.length == 100) {
         start();
       }
     }
