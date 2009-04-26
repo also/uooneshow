@@ -9,7 +9,8 @@ package {
   import flash.utils.Timer;
 
   class FeedMainSprite extends Sprite {
-    private var displayHeight:int = 480;
+    private var displayWidth:int;
+    private var displayHeight:int;
     private var textFormat:TextFormat;
     private var started:Boolean = false;
     private var top:Sprite;
@@ -30,7 +31,10 @@ package {
     private var feedItemDisplayTime:int = 2000;
     private var feedItemScrollTime:int = 1000;
 
-    public function FeedMainSprite() {
+    public function FeedMainSprite(displayWidth:int, displayHeight:int) {
+      this.displayWidth = displayWidth;
+      this.displayHeight = displayHeight;
+
       cacheAsBitmap = true;
 
       textFormat = new TextFormat();

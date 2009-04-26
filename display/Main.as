@@ -26,7 +26,7 @@ package {
       }, 640, 430);
       addChild(featuredImage);
 
-      feedSprite = new FeedMainSprite();
+      feedSprite = new FeedMainSprite(640, 480);
       //addChild(feedSprite);
 
       var tickerBackground:Shape = new Shape();
