@@ -11,7 +11,6 @@ package {
   class MessageVerticalScroller extends Sprite {
     private var displayHeight:int = 480;
     private var textFormat:TextFormat;
-    private var childIndex:int = 0;
     private var started:Boolean = false;
     private var top:Sprite;
     private var bottom:Sprite;

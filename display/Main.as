@@ -9,10 +9,14 @@ package {
     private var messageTicker:MessageTicker;
     private var messageScroller:MessageVerticalScroller;
     private var monitor:Monitor;
+    public static var connector:Connector;
 
     public function Main() {
       var options:Object = root.loaderInfo.parameters;
       Main.baseUrl = options.baseUrl || 'http://localhost:3000/';
+
+      connector = new Connector();
+      connector.connect('localhost', 1843);
 
       messageScroller = new MessageVerticalScroller();
       addChild(messageScroller);
@@ -32,8 +36,6 @@ package {
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageScroller.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
-
-      new Connector().connect('localhost', 1843);
     }
   }
 }
