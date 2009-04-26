@@ -21,6 +21,10 @@ package {
     private var bottomY:int;
     private var currentMessageLength:int;
     private var currentIndex:int;
+    // JESUS FUCKING CHRIST ADOBE, WHY DIDN'T YOU DOCUMENT THE FACT THAT NO HARD REFERENCES
+    // TO THE TWEEN ARE HELD SO IT WILL BE GARBAGE COLLECTED UNLESS I PUT IT IN THIS HERE
+    // CLASS VARIABLE.
+    private var tween:Tween;
 
     public function MessageVerticalScroller() {
       cacheAsBitmap = true;
@@ -75,7 +79,9 @@ package {
     }
 
     private function refill():void {
+      bottomY = 10;
       while (bottomY <= stage.stageHeight && bottomIndex < currentMessageLength) {
+        trace('  adding message ' + bottomIndex);
         var messageSprite:MessageSprite = new MessageSprite(messages[bottomIndex], textFormat);
         messageSprite.y = bottomY;
         bottom.addChild(messageSprite);
@@ -97,19 +103,14 @@ package {
           scrollEndY = topHeight + bottomY;
         }
         else {
-          trace('  advancing to message ' + currentIndex);
+          trace('  advancing to message ' + currentIndex + ' (' + messageHeights[currentIndex] + ' high)' );
           scrollEndY = scrollY + messageHeights[currentIndex];
         }
         currentIndex++;
 
         trace('  scrolling from ' + scrollY + ' to ' + scrollEndY);
-        var tween:Tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, 1, true);
+        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, 1, true);
         tween.addEventListener('motionFinish', advanceEnd);
-        //tween.addEventListener('motionChange', tweenWtf);
-        //tween.addEventListener('motionStop', tweenWtf);
-        //tween.addEventListener('motionStop', tweenWtf);
-        //tween.addEventListener('motionStop', tweenWtf);
-        //tween.addEventListener('motionStop', tweenWtf);
       }
       else {
         trace('  advanced past last message');
@@ -117,13 +118,9 @@ package {
       }
     }
 
-    private function tweenWtf(e:Event):void {
-      trace(e.type);
-      //trace(new Error().getStackTrace());
-    }
-
     private function advanceEnd(e:Event):void {
       trace('finished advancing');
+      tween = null;
       var timer:Timer = new Timer(2000, 1);
       timer.addEventListener('timer', scrollTime);
       timer.start();
