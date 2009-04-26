@@ -23,11 +23,11 @@ package {
         title: 'a tree',
         credit: 'Somebody so sxc.hu',
         url: 'http://ryanberdeen.com'
-      });
+      }, 640, 430);
       addChild(featuredImage);
 
       feedSprite = new FeedMainSprite();
-      addChild(feedSprite);
+      //addChild(feedSprite);
 
       var tickerBackground:Shape = new Shape();
       tickerBackground.y = stage.stageHeight - 50;
