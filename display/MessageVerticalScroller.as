@@ -28,8 +28,8 @@ package {
     private var tween:Tween;
 
     private var messageSpacing:int = 10;
-    private var messageDisplayTime:int = 2//000;
-    private var messageScrollTime:int = 500;
+    private var messageDisplayTime:int = 2000;
+    private var messageScrollTime:int = 1000;
 
     public function MessageVerticalScroller() {
       cacheAsBitmap = true;
@@ -59,7 +59,6 @@ package {
       bottomY = 0;
       currentMessageLength = messages.length;
 
-      trace('starting with ' + currentMessageLength + ' messages');
       // start off empty
       bottom = new Sprite();
       addChild(bottom);
@@ -68,15 +67,13 @@ package {
     }
 
     private function nextSet():void {
-      trace('  next set')
       if (top != null) {
         removeChild(top);
       }
       top = bottom;
       var scrollOffset:int = topHeight - displayHeight;
-      trace('  scrollOffset: '+ scrollOffset);
       top.y = 0;
-      scrollRect = new Rectangle(0, scrollOffset, stage.stageWidth, displayHeight);
+      scrollRect = new Rectangle(0, scrollOffset + messageSpacing, stage.stageWidth, displayHeight);
       bottom = new Sprite();
       bottom.y = topHeight + messageSpacing;
       addChild(bottom);
@@ -86,7 +83,6 @@ package {
     private function refill():void {
       bottomY = 0;
       while (bottomY <= displayHeight && bottomIndex < currentMessageLength) {
-        trace('  adding message ' + bottomIndex);
         var messageSprite:MessageSprite = new MessageSprite(messages[bottomIndex], textFormat);
         messageSprite.y = bottomY;
         bottom.addChild(messageSprite);
@@ -97,34 +93,30 @@ package {
     }
 
     private function advance():void {
-      trace('advancing');
       if (currentIndex <= currentMessageLength) {
         if (currentIndex == bottomIndex) {
           nextSet();
         }
         var scrollEndY:int;
         if (currentIndex == currentMessageLength) {
-          trace('  scrolling last message off screen');
+          // scrolling last message off screen
           scrollEndY = topHeight + bottomY;
         }
         else {
-          trace('  advancing to message ' + currentIndex + ' (' + messageHeights[currentIndex] + ' high)' );
-          scrollEndY = scrollY + messageHeights[currentIndex];
+          scrollEndY = scrollY + messageHeights[currentIndex] + messageSpacing;
         }
         currentIndex++;
 
-        trace('  scrolling from ' + scrollY + ' to ' + scrollEndY);
         tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, messageScrollTime / 1000, true);
         tween.addEventListener('motionFinish', advanceEnd);
       }
       else {
-        trace('  advanced past last message');
+        // advanced past last message
         start();
       }
     }
 
     private function advanceEnd(e:Event):void {
-      trace('finished advancing');
       tween = null;
       var timer:Timer = new Timer(messageDisplayTime, 1);
       timer.addEventListener('timer', scrollTime);
