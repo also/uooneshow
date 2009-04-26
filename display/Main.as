@@ -18,7 +18,12 @@ package {
       connector = new Connector();
       connector.connect('localhost', 1843);
 
-      var featuredImage:FeaturedImageSprite = new FeaturedImageSprite({url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg'});
+      var featuredImage:FeaturedImageSprite = new FeaturedImageSprite({
+        image_url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg',
+        title: 'a tree',
+        credit: 'Somebody so sxc.hu',
+        url: 'http://ryanberdeen.com'
+      });
       addChild(featuredImage);
 
       feedSprite = new FeedMainSprite();
