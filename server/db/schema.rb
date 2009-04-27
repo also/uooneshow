@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090424044527) do
+ActiveRecord::Schema.define(:version => 20090427005121) do
 
   create_table "messages", :force => true do |t|
     t.string   "text"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(:version => 20090424044527) do
     t.string   "source"
     t.string   "remote_id"
     t.string   "profile_image_url"
+  end
+
+  create_table "reel_items", :force => true do |t|
+    t.string   "slug"
+    t.string   "title"
+    t.string   "credit"
+    t.string   "url"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "snapshots", :force => true do |t|

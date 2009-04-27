@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
     scope = Message
     scope = scope.since_id(params[:since_id]) if params[:since_id]
 
-    @messages = scope.all :order => 'created_at DESC'
+    @messages = scope.all :order => 'created_at DESC', :limit => 15
     respond_to do |format|
       format.html
       format.json { render :json => {:messages => @messages, :max_id => Message.maximum(:id)} }

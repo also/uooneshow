@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :snapshots
   map.resources :messages
+  map.resources :reel_items
 
   map.root :controller => 'messages', :action => :new
 
