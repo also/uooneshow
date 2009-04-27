@@ -14,29 +14,25 @@ package {
     private var timer:Timer;
 
     private var itemDisplayTime:int = 5000;
+    private var jsonLoader:JsonLoader;
 
     public function ReelSprite(displayWidth:int, displayHeight:int) {
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
-      // TODO dynamic
-      items = [
-        {
-          image_url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg',
-          title: 'a tree',
-          credit: 'Somebody from sxc.hu',
-          url: 'http://ryanberdeen.com'
-        },
-        {
-          image_url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/bottom.jpg',
-          title: 'some grass',
-          credit: 'same as the tree',
-          url: 'http://oneshow.ryanberdeen.com'
-        }
-      ];
 
+      jsonLoader = new JsonLoader(Main.baseUrl + 'reel_items.json', reelItemsLoaded);
+      jsonLoader.load();
+    }
+
+    private function start():void {
       currentItemIndex = -1;
       prepareNextItem();
       advance();
+    }
+
+    private function reelItemsLoaded(result:Object):void {
+      items = result.reel_items;
+      start();
     }
 
     private function prepareNextItem():void {
