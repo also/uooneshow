@@ -18,13 +18,8 @@ package {
       connector = new Connector();
       connector.connect('localhost', 1843);
 
-      var featuredImage:FeaturedImageSprite = new FeaturedImageSprite({
-        image_url: 'http://static.ryanberdeen.com/ryanberdeen.com/i/top.jpg',
-        title: 'a tree',
-        credit: 'Somebody so sxc.hu',
-        url: 'http://ryanberdeen.com'
-      }, 640, 430);
-      addChild(featuredImage);
+      var reelSprite:ReelSprite = new ReelSprite(640, 430);
+      addChild(reelSprite);
 
       feedSprite = new FeedMainSprite(640, 480);
       //addChild(feedSprite);
@@ -41,7 +36,7 @@ package {
       addChild(messageTicker);
 
       monitor = new Monitor(options.monitorInterval || 5000);
-      monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
+      //monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
     }
