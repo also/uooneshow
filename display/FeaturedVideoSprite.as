@@ -19,15 +19,12 @@ package {
       connection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
       connection.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
       connection.connect(null);
-
-      // TODO
-      //var timer:Timer = new Timer(1000);
-      //timer.addEventListener('timer', timerHandler);
-      //timer.start();
+      // TODO should not start playing immediately
     }
 
     private function timerHandler(e:Event):void {
-      // TODO show progress
+      // TODO
+      trace('bytes: ' + stream.bytesLoaded + '/' + stream.bytesTotal);
     }
 
     private function netStatusHandler(event:NetStatusEvent):void {
@@ -37,7 +34,7 @@ package {
           break;
         case "NetStream.Play.StreamNotFound":
           // TODO
-          trace("Unable to locate video: " + videoData.video_url);
+          trace("Unable to locate video: " + videoData.media_url);
           break;
       }
     }
@@ -46,13 +43,19 @@ package {
       stream = new NetStream(connection);
       stream.bufferTime = 10;
       stream.client = this;
+      // TODO listen for io errors?
       stream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
       stream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
       video = new Video();
       video.smoothing = true;
       video.attachNetStream(stream);
-      stream.play(videoData.video_url);
+      stream.play(videoData.media_url);
       addChild(video);
+
+      // TODO
+      //var timer:Timer = new Timer(1000);
+      //timer.addEventListener('timer', timerHandler);
+      //timer.start();
     }
 
     private function securityErrorHandler(event:SecurityErrorEvent):void {

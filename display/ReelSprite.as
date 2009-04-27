@@ -38,7 +38,18 @@ package {
     private function prepareNextItem():void {
       currentItemIndex = (currentItemIndex + 1) % items.length;
 
-      nextItemSprite = new FeaturedImageSprite(items[currentItemIndex], displayWidth, displayHeight);
+      var item:Object = items[currentItemIndex];
+
+      switch(item.media_type) {
+        case 'image':
+          nextItemSprite = new FeaturedImageSprite(item, displayWidth, displayHeight);
+          break;
+        case 'video':
+          nextItemSprite = new FeaturedVideoSprite(item, displayWidth, displayHeight);
+          break;
+        default:
+          // TODO
+      }
     }
 
     private function advance():void {
