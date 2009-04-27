@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090427005121) do
+ActiveRecord::Schema.define(:version => 20090427033426) do
 
   create_table "messages", :force => true do |t|
     t.string   "text"
@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(:version => 20090427005121) do
     t.string   "title"
     t.string   "credit"
     t.string   "url"
-    t.string   "image_url"
+    t.string   "media_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "media_type"
   end
 
   create_table "snapshots", :force => true do |t|

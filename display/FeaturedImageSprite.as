@@ -18,7 +18,7 @@ package {
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
       imageLoader = new Loader();
-      imageLoader.load(new URLRequest(image.image_url));
+      imageLoader.load(new URLRequest(image.media_url));
       imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
       addChild(imageLoader);
 
