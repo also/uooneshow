@@ -1,9 +1,12 @@
-package {
+package com.ryanberdeen.oneshow.reel {
+  import com.ryanberdeen.oneshow.Main;
+  import com.ryanberdeen.oneshow.support.JsonLoader;
+
   import flash.display.Sprite;
   import flash.events.Event;
   import flash.utils.Timer;
 
-  class ReelSprite extends Sprite {
+  public class ReelSprite extends Sprite {
     private var displayWidth:int;
     private var displayHeight:int;
 

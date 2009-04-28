@@ -1,4 +1,6 @@
-package {
+package com.ryanberdeen.oneshow {
+  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+
   import flash.display.Sprite;
   import flash.events.Event;
   import flash.geom.Rectangle;

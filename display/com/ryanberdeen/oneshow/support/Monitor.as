@@ -1,4 +1,6 @@
-package {
+package com.ryanberdeen.oneshow.support {
+  import com.ryanberdeen.oneshow.Main;
+
   import com.adobe.serialization.json.JSON;
 
   import flash.events.Event;
@@ -8,7 +10,7 @@ package {
   import flash.net.URLRequest;
   import flash.utils.Timer;
 
-  class Monitor extends EventDispatcher {
+  public class Monitor extends EventDispatcher {
     private var loader:URLLoader;
     private var maxId:String;
 

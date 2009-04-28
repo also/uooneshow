@@ -1,4 +1,7 @@
-package {
+package com.ryanberdeen.oneshow.feed {
+  import com.ryanberdeen.oneshow.Main;
+  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+
   import fl.transitions.Tween;
   import fl.transitions.easing.Regular;
 
@@ -8,7 +11,7 @@ package {
   import flash.text.TextFormat;
   import flash.utils.Timer;
 
-  class FeedMainSprite extends Sprite {
+  public class FeedMainSprite extends Sprite {
     private var displayWidth:int;
     private var displayHeight:int;
     private var textFormat:TextFormat;

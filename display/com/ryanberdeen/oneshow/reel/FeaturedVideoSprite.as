@@ -1,4 +1,4 @@
-package {
+package com.ryanberdeen.oneshow.reel {
   import flash.display.Sprite;
   import flash.events.*;
   import flash.media.Video;

@@ -1,4 +1,10 @@
-package {
+package com.ryanberdeen.oneshow {
+  import com.ryanberdeen.oneshow.feed.FeedMainSprite;
+  import com.ryanberdeen.oneshow.reel.ReelSprite;
+  import com.ryanberdeen.oneshow.support.Connector;
+  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+  import com.ryanberdeen.oneshow.support.Monitor;
+
   import flash.display.Shape;
   import flash.display.Sprite;
   import flash.events.Event;

@@ -1,4 +1,4 @@
-package {
+package com.ryanberdeen.oneshow.reel {
   import flash.display.DisplayObject;
   import flash.display.Shape;
   import flash.display.Sprite;

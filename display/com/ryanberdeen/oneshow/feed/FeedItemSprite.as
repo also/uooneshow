@@ -1,4 +1,6 @@
-package {
+package com.ryanberdeen.oneshow.feed {
+  import com.ryanberdeen.oneshow.Main;
+
   import flash.display.Loader;
   import flash.display.Shape;
   import flash.display.Sprite;
@@ -9,7 +11,7 @@ package {
   import flash.text.TextField;
   import flash.text.TextFormat;
 
-  class FeedItemSprite extends Sprite {
+  public class FeedItemSprite extends Sprite {
     private static const PADDING:int = 10;
     private static const HIGHLIGHT_BORDER_WIDTH:int = PADDING / 2;
     private static const IMAGE_WIDTH:int = 160;

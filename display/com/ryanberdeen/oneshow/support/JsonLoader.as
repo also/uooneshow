@@ -1,11 +1,11 @@
-package {
+package com.ryanberdeen.oneshow.support {
   import com.adobe.serialization.json.JSON;
 
   import flash.events.Event;
   import flash.net.URLLoader;
   import flash.net.URLRequest;
 
-  class JsonLoader {
+  public class JsonLoader {
     private var loader:URLLoader;
     private var url:String;
     private var resultHandler:Function;
