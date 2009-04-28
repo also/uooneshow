@@ -2,11 +2,12 @@ package com.ryanberdeen.oneshow.reel {
   import com.ryanberdeen.oneshow.Main;
   import com.ryanberdeen.oneshow.support.JsonLoader;
 
+  import flash.display.Shape;
   import flash.display.Sprite;
   import flash.events.Event;
   import flash.utils.Timer;
 
-  public class ReelSprite extends Sprite {
+  public class ReelSprite extends Sprite implements ReelController {
     private var displayWidth:int;
     private var displayHeight:int;
 
@@ -16,6 +17,9 @@ package com.ryanberdeen.oneshow.reel {
     private var currentItemIndex:int;
     private var timer:Timer;
 
+    private var timeExpired:Boolean;
+    private var nextItemReady:Boolean;
+
     private var itemDisplayTime:int = 5000;
     private var jsonLoader:JsonLoader;
 
@@ -23,14 +27,20 @@ package com.ryanberdeen.oneshow.reel {
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
 
+      var background:Shape = new Shape();
+      background.graphics.beginFill(0);
+      background.graphics.drawRect(0, 0, displayWidth, displayHeight);
+      background.graphics.endFill();
+      addChild(background);
+
       jsonLoader = new JsonLoader(Main.baseUrl + 'reel_items.json', reelItemsLoaded);
       jsonLoader.load();
     }
 
     private function start():void {
       currentItemIndex = -1;
+      timeExpired = true;
       prepareNextItem();
-      advance();
     }
 
     private function reelItemsLoaded(result:Object):void {
@@ -38,17 +48,29 @@ package com.ryanberdeen.oneshow.reel {
       start();
     }
 
+    public function itemReady():void {
+      nextItemReady = true;
+      if (timeExpired) {
+        advance();
+      }
+    }
+
+    public function itemFinished():void {
+
+    }
+
     private function prepareNextItem():void {
+      nextItemReady = false;
       currentItemIndex = (currentItemIndex + 1) % items.length;
 
       var item:Object = items[currentItemIndex];
 
       switch(item.media_type) {
         case 'image':
-          nextItemSprite = new FeaturedImageSprite(item, displayWidth, displayHeight);
+          nextItemSprite = new FeaturedImageSprite(item, this, displayWidth, displayHeight);
           break;
         case 'video':
-          nextItemSprite = new FeaturedVideoSprite(item, displayWidth, displayHeight);
+          nextItemSprite = new FeaturedVideoSprite(item, this, displayWidth, displayHeight);
           break;
         default:
           // TODO
@@ -57,13 +79,16 @@ package com.ryanberdeen.oneshow.reel {
 
     private function advance():void {
       if (currentItemSprite != null) {
+        ReelItem(currentItemSprite).stop();
         removeChild(currentItemSprite);
       }
 
       currentItemSprite = nextItemSprite;
       addChild(currentItemSprite);
+      ReelItem(currentItemSprite).start();
 
-      timer = new Timer(itemDisplayTime, 1);
+      timeExpired = false;
+      timer = new Timer(ReelItem(currentItemSprite).nominalTime, 1);
       timer.addEventListener('timer', timerHandler);
       timer.start();
 
@@ -72,7 +97,10 @@ package com.ryanberdeen.oneshow.reel {
 
     private function timerHandler(e:Event):void {
       timer = null;
-      advance();
+      timeExpired = true;
+      if (nextItemReady) {
+        advance();
+      }
     }
   }
 }

@@ -8,13 +8,15 @@ package com.ryanberdeen.oneshow.reel {
   import flash.text.TextField;
   import flash.text.TextFormat;
 
-  class FeaturedImageSprite extends Sprite {
+  class FeaturedImageSprite extends Sprite implements ReelItem {
+    private var controller:ReelController;
     private var displayWidth:int;
     private var displayHeight:int;
 
     private var imageLoader:Loader;
 
-    public function FeaturedImageSprite(image:Object, displayWidth:int, displayHeight:int) {
+    public function FeaturedImageSprite(image:Object, controller:ReelController, displayWidth:int, displayHeight:int) {
+      this.controller = controller;
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
       imageLoader = new Loader();
@@ -27,6 +29,26 @@ package com.ryanberdeen.oneshow.reel {
       addChild(credit);
     }
 
+    public function start():void {
+      // nothing to do
+    }
+
+    public function get isTimed():Boolean {
+      return false;
+    }
+
+    public function get nominalTime():int {
+      return 10000;
+    }
+
+    public function get loadTime():int {
+      return 5000;
+    }
+
+    public function stop():void {
+      // nothing to do
+    }
+
     private function completeHandler(event:Event):void {
       var image:DisplayObject = imageLoader.content;
       if (image.width > displayWidth) {
@@ -36,6 +58,7 @@ package com.ryanberdeen.oneshow.reel {
         image.height = displayHeight;
       }
       image.scaleY = image.scaleX = Math.min(image.scaleY, image.scaleX);
+      controller.itemReady();
     }
   }
 }
