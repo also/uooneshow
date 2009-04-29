@@ -24,11 +24,20 @@ package com.ryanberdeen.oneshow {
       connector = new Connector();
       connector.connect('localhost', 1843);
 
-      var reelSprite:ReelSprite = new ReelSprite(640, 430);
+      var background:Shape = new Shape();
+      background.graphics.beginFill(0xdbddde);
+      background.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+      background.graphics.endFill();
+      addChild(background);
+
+      var reelSprite:ReelSprite = new ReelSprite(500, 490);
+      reelSprite.y = 60;
       addChild(reelSprite);
 
-      feedSprite = new FeedMainSprite(640, 480);
-      //addChild(feedSprite);
+      feedSprite = new FeedMainSprite(300, 490);
+      feedSprite.x = 500;
+      feedSprite.y = 60;
+      addChild(feedSprite);
 
       var tickerBackground:Shape = new Shape();
       tickerBackground.y = stage.stageHeight - 50;
@@ -42,7 +51,7 @@ package com.ryanberdeen.oneshow {
       addChild(messageTicker);
 
       monitor = new Monitor(options.monitorInterval || 5000);
-      //monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
+      monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
       monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
       monitor.start();
     }
