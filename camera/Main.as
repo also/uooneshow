@@ -3,6 +3,7 @@ package {
   import com.adobe.serialization.json.JSON;
 
   import flash.display.BitmapData;
+  import flash.display.Graphics;
   import flash.display.Sprite;
   import flash.events.Event;
   import flash.events.MouseEvent;
@@ -24,6 +25,8 @@ package {
   public class Main extends Sprite {
     private var camera:Camera;
     private var video:Video;
+    private var snapshotGraphics:Graphics;
+    private var showingSnapshot:Boolean;
 
     private var loader:URLLoader;
     private var snapshotUrl:String;
@@ -37,9 +40,16 @@ package {
       video.attachCamera(camera);
       trace('camera muted:' + camera.muted);
 
+      var snapshotSprite:Sprite = new Sprite();
+      addChild(snapshotSprite);
+      snapshotGraphics = snapshotSprite.graphics;
+
+      showingSnapshot = false;
+
       stage.addEventListener(MouseEvent.CLICK, onClick);
 
       ExternalInterface.addCallback('takeSnapshot', takeSnapshot);
+      ExternalInterface.addCallback('takeSnapshot', clearSnapshot);
       ExternalInterface.addCallback('showCameraSettings', showCameraSettings);
       ExternalInterface.addCallback('showPrivacySettings', showPrivacySettings);
     }
@@ -52,10 +62,10 @@ package {
       Security.showSettings(SecurityPanel.PRIVACY);
     }
 
-    private function captureSnapshot():ByteArray {
+    private function captureSnapshot():BitmapData {
       var bitmap:BitmapData = new BitmapData(640, 480);
       bitmap.draw(video);
-      return PNGEncoder.encode(bitmap);
+      return bitmap;
     }
 
     private function sendSnapshot(bytes:ByteArray):void {
@@ -73,6 +83,19 @@ package {
       loader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 
       loader.load(request);
+    }
+
+    private function clearSnapshot():void {
+      snapshotGraphics.clear();
+      showingSnapshot = false;
+    }
+
+    private function showSnapshot(bitmap:BitmapData):void {
+      clearSnapshot();
+      snapshotGraphics.beginBitmapFill(bitmap);
+      snapshotGraphics.drawRect(0, 0, bitmap.width, bitmap.height);
+      snapshotGraphics.endFill();
+      showingSnapshot = true;
     }
 
     private function completeHandler(event:Event):void {
@@ -106,7 +129,12 @@ package {
     }
 
     private function onClick(e:MouseEvent):void {
-      takeSnapshot();
+      if (!showingSnapshot) {
+        takeSnapshot();
+      }
+      else {
+        clearSnapshot();
+      }
     }
 
     private function takeSnapshot():Boolean {
@@ -114,7 +142,10 @@ package {
         trace('ignoring click while posting snapshot');
         return false; // a snapshot is being sent
       }
-      var bytes:ByteArray = captureSnapshot();
+      var bitmap:BitmapData = captureSnapshot();
+      var bytes:ByteArray = PNGEncoder.encode(bitmap);
+
+      showSnapshot(bitmap);
 
       sendSnapshot(bytes);
       return true;

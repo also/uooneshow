@@ -5,26 +5,43 @@
   font-family: helvetica;
 }
 
+#buttons {
+  width: 640px;
+  margin-top: 10px;
+}
+
+.instructions {
+  background-color: #0070FF;
+  width: 620px;
+  color: #ffffff;
+  padding: 10px;
+  margin: 0;
+}
+
 #send {
+  float: right;
   background-color: #000;
   color: #fff;
   border: none;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   padding: 10px;
   vertical-align: top;
-  margin: 0 0 0 10px;
+  margin: 0;
 }
 </style>
 
+<p class="instructions"><strong>Step 1</strong> Click below to take your picture.</p>
 <div id="camera"></div>
 
 <div class="feed_item_wrapper">
-<div class="snapshot" id="snapshot"></div>
+<div class="snapshot" id="snapshot" style="display:none"></div>
 
 <% form_for :feed_item, :url => { :action => :create } do |f| %>
 <%= f.hidden_field :snapshot_id %>
-<%= f.text_area :text, :class => 'feed_item_text' %><button type="submit" id="send">Send</button>
+<p class="instructions"><strong>Step 2</strong> Put a message in this box.</p>
+<%= f.text_area :text, :class => 'feed_item_text' %>
+<div id="buttons"><button type="submit" id="send">Send</button></div>
 <% end %>
 </div>
 
