@@ -1,6 +1,6 @@
 package com.ryanberdeen.oneshow.feed {
   import com.ryanberdeen.oneshow.Main;
-  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+  import com.ryanberdeen.oneshow.support.ItemsReceivedEvent;
 
   import fl.transitions.Tween;
   import fl.transitions.easing.Regular;
@@ -144,11 +144,9 @@ package com.ryanberdeen.oneshow.feed {
       return scrollRect.y;
     }
 
-    public function messageReceived(messageEvent:MessageReceivedEvent):void {
-      feedItems[feedItems.length] = messageEvent.message;
-      if (!started && feedItems.length == 100) {
-        start();
-      }
+    public function itemsReceived(e:ItemsReceivedEvent):void {
+      feedItems = e.items;
+      start();
     }
   }
 }

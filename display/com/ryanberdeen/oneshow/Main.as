@@ -2,7 +2,7 @@ package com.ryanberdeen.oneshow {
   import com.ryanberdeen.oneshow.feed.FeedMainSprite;
   import com.ryanberdeen.oneshow.reel.ReelSprite;
   import com.ryanberdeen.oneshow.support.Connector;
-  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+  import com.ryanberdeen.oneshow.support.ItemsReceivedEvent;
   import com.ryanberdeen.oneshow.support.Monitor;
 
   import flash.display.Shape;
@@ -14,7 +14,7 @@ package com.ryanberdeen.oneshow {
 
     private var messageTicker:MessageTicker;
     private var feedSprite:FeedMainSprite;
-    private var monitor:Monitor;
+    public static var feedMonitor:Monitor;
     public static var connector:Connector;
 
     public function Main() {
@@ -50,10 +50,10 @@ package com.ryanberdeen.oneshow {
       messageTicker.y = stage.stageHeight - 45;
       addChild(messageTicker);
 
-      monitor = new Monitor(options.monitorInterval || 5000);
-      monitor.addEventListener(MessageReceivedEvent.TYPE, feedSprite.messageReceived);
-      monitor.addEventListener(MessageReceivedEvent.TYPE, messageTicker.messageReceived);
-      monitor.start();
+      feedMonitor = new Monitor(Main.baseUrl +  'messages.json', 'messages', options.monitorInterval || 5000);
+      feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
+      feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, messageTicker.itemsReceived);
+      feedMonitor.start();
     }
   }
 }

@@ -7,7 +7,7 @@ package com.ryanberdeen.oneshow.support {
 
   public class JsonLoader {
     private var loader:URLLoader;
-    private var url:String;
+    public var url:String;
     private var resultHandler:Function;
 
     public function JsonLoader(url:String, resultHandler:Function) {

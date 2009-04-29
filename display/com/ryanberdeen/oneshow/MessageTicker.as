@@ -1,5 +1,5 @@
 package com.ryanberdeen.oneshow {
-  import com.ryanberdeen.oneshow.support.MessageReceivedEvent;
+  import com.ryanberdeen.oneshow.support.ItemsReceivedEvent;
 
   import flash.display.Sprite;
   import flash.events.Event;
@@ -33,10 +33,16 @@ package com.ryanberdeen.oneshow {
       messageX = 0;
     }
 
-    public function messageReceived(messageEvent:MessageReceivedEvent):void {
+    public function itemsReceived(itemsEvent:ItemsReceivedEvent):void {
+      for each(var item:Object in itemsEvent.newItems) {
+        addItem(item);
+      }
+    }
+
+    private function addItem(item:Object):void {
       var text:TextField = new TextField();
       text.defaultTextFormat = textFormat;
-      text.text = messageEvent.message.text;
+      text.text = item.text;
       text.width = text.textWidth + 5;
       text.x = messageX;
       messageX += text.width + SPACING;
