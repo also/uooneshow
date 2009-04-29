@@ -50,7 +50,7 @@ package com.ryanberdeen.oneshow {
       messageTicker.y = stage.stageHeight - 45;
       addChild(messageTicker);
 
-      feedMonitor = new Monitor(Main.baseUrl +  'messages.json', 'messages', options.monitorInterval || 5000);
+      feedMonitor = new Monitor(Main.baseUrl +  'feed_items.json', 'feed_items', options.monitorInterval || 5000);
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, messageTicker.itemsReceived);
       feedMonitor.start();

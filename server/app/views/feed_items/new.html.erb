@@ -19,12 +19,12 @@
 
 <div id="camera"></div>
 
-<div class="message_wrapper">
+<div class="feed_item_wrapper">
 <div class="snapshot" id="snapshot"></div>
 
-<% form_for :message, :url => { :action => :create } do |f| %>
+<% form_for :feed_item, :url => { :action => :create } do |f| %>
 <%= f.hidden_field :snapshot_id %>
-<%= f.text_area :text, :class => 'message_text' %><button type="submit" id="send">Send</button>
+<%= f.text_area :text, :class => 'feed_item_text' %><button type="submit" id="send">Send</button>
 <% end %>
 </div>
 

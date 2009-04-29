@@ -13,7 +13,7 @@ var initCamera = function(snapshotUrl) {
 var snapshotPosted = function(snapshot) {
   console.log(snapshot);
   $('snapshot').update(new Element('img', {src: '/snapshots/' + snapshot.id + '.png'}));
-  $('message_snapshot_id').value = snapshot.id;
+  $('feed_item_snapshot_id').value = snapshot.id;
 };
 
 var initLive = function(flashVars) {

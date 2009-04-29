@@ -1,0 +1,28 @@
+<style type="text/css">
+* {
+  font-family: helvetica;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.feed_item_text {
+  margin-left: 170px;
+}
+</style>
+<ul>
+<% @feed_items.each do |feed_item| %><li id="feed_item_<%= feed_item.id %>">
+  <div class="snapshot"><% if feed_item.image_url %><img src="<%= feed_item.image_url %>" alt="Snapshot"/><% end %></div>
+  <div><div class="feed_item_text"><%=h feed_item.text %></div></div>
+</li>
+<% end %></ul>
