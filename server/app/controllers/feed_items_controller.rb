@@ -14,7 +14,9 @@ class FeedItemsController < ApplicationController
   end
 
   def create
-    if @feed_item = FeedItem.create(params[:feed_item])
+    attributes = params[:feed_item]
+    attributes[:source] = 'snapshot'
+    if @feed_item = FeedItem.create(attributes)
       redirect_to new_feed_item_url
     else
       render :text => 'nope!'
