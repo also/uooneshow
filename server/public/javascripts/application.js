@@ -3,7 +3,7 @@ var trace = function(message) {
 };
 
 var initCamera = function(snapshotUrl) {
-  swfobject.embedSWF('/swfs/camera.swf', 'camera', 320, 240, '9.0.0', null, {snapshotUrl: snapshotUrl});
+  swfobject.embedSWF('/swfs/camera.swf', 'camera', 640, 480, '9.0.0', null, {snapshotUrl: snapshotUrl});
   $('snapshot').observe('click', function(event) {
     event.stop();
     $('camera').takeSnapshot();

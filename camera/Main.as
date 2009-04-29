@@ -17,6 +17,8 @@ package {
   import flash.net.URLRequest;
   import flash.net.URLRequestHeader;
   import flash.net.URLRequestMethod;
+  import flash.system.SecurityPanel;
+  import flash.system.Security;
   import flash.utils.ByteArray;
 
   public class Main extends Sprite {
@@ -29,18 +31,29 @@ package {
     public function Main() {
       snapshotUrl = root.loaderInfo.parameters.snapshotUrl;
       camera = Camera.getCamera();
-      camera.setMode(320, 240, 29);
-      video = new Video(320, 240);
+      camera.setMode(640, 480, 29);
+      video = new Video(640, 480);
       addChild(video);
       video.attachCamera(camera);
+      trace('camera muted:' + camera.muted);
 
       stage.addEventListener(MouseEvent.CLICK, onClick);
 
       ExternalInterface.addCallback('takeSnapshot', takeSnapshot);
+      ExternalInterface.addCallback('showCameraSettings', showCameraSettings);
+      ExternalInterface.addCallback('showPrivacySettings', showPrivacySettings);
+    }
+
+    private function showCameraSettings():void {
+      Security.showSettings(SecurityPanel.CAMERA);
+    }
+
+    private function showPrivacySettings():void {
+      Security.showSettings(SecurityPanel.PRIVACY);
     }
 
     private function captureSnapshot():ByteArray {
-      var bitmap:BitmapData = new BitmapData(320, 240);
+      var bitmap:BitmapData = new BitmapData(640, 480);
       bitmap.draw(video);
       return PNGEncoder.encode(bitmap);
     }
