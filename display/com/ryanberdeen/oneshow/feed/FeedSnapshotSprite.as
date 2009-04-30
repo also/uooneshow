@@ -1,6 +1,7 @@
 package com.ryanberdeen.oneshow.feed {
   import com.ryanberdeen.oneshow.Main;
 
+  import flash.display.Bitmap;
   import flash.display.Loader;
   import flash.display.Shape;
   import flash.display.Sprite;
@@ -52,6 +53,7 @@ package com.ryanberdeen.oneshow.feed {
 
       imageLoader = new Loader();
       imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+      imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
       imageLoader.x = PADDING * 2;
       imageLoader.y = text.textHeight + PADDING * 2;
       imageLoader.scaleX = imageLoader.scaleY = imageScale;
@@ -62,6 +64,10 @@ package com.ryanberdeen.oneshow.feed {
 
     private function ioErrorHandler(e:IOErrorEvent):void {
       // TODO display placeholder?
+    }
+
+    private function completeHandler(e:Event):void {
+      Bitmap(imageLoader.content).smoothing = true;
     }
 
     override public function get offsetHeight():int {

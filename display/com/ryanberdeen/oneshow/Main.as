@@ -1,5 +1,6 @@
 package com.ryanberdeen.oneshow {
   import com.ryanberdeen.oneshow.feed.FeedMainSprite;
+  import com.ryanberdeen.oneshow.feed.LiveMessageSprite;
   import com.ryanberdeen.oneshow.reel.ReelSprite;
   import com.ryanberdeen.oneshow.support.Connector;
   import com.ryanberdeen.oneshow.support.ItemsReceivedEvent;
@@ -29,18 +30,23 @@ package com.ryanberdeen.oneshow {
       background.graphics.endFill();
       addChild(background);
 
-      var reelSprite:ReelSprite = new ReelSprite(500, 490);
-      reelSprite.x = 300;
+      var reelSprite:ReelSprite = new ReelSprite(550, 490);
+      reelSprite.x = 240;
       reelSprite.y = 60;
       addChild(reelSprite);
 
-      feedSprite = new FeedMainSprite(300, 490);
+      feedSprite = new FeedMainSprite(240, 490);
       feedSprite.y = 60;
       addChild(feedSprite);
 
       feedMonitor = new Monitor(Main.baseUrl +  'feed_items.json', 'feed_items', options.monitorInterval || 5000);
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
       feedMonitor.start();
+
+      var liveMessage:Sprite = new LiveMessageSprite();
+      liveMessage.x = 100;
+      liveMessage.y = 100;
+      addChild(liveMessage);
     }
   }
 }

@@ -42,7 +42,7 @@ package com.ryanberdeen.oneshow.feed {
 
       textFormat = new TextFormat();
       textFormat.font = 'Helvetica';
-      textFormat.size = 18;
+      textFormat.size = 14;
       textFormat.color = 0x333333;
       textFormat.bold = true;
 

@@ -19,45 +19,58 @@ package com.ryanberdeen.oneshow.reel {
       textFormat.color = 0x333333;
       textFormat.bold = true;
 
-      titleText = new TextField();
-      titleText.defaultTextFormat = textFormat;
-      titleText.text = featureItem.title;
-      // TODO dimension
-      titleText.width = titleText.textWidth + 5;
-      titleText.height = titleText.textHeight + 5;
-      // TODO dimension
-      titleText.x = 10;
-      titleText.y = 10;
-      addChild(titleText);
+      var textWidth:Number = 0;
 
-      creditText = new TextField();
-      creditText.defaultTextFormat = textFormat;
-      creditText.text = featureItem.credit;
-      // TODO dimension
-      creditText.width = creditText.textWidth + 5;
-      creditText.height = creditText.textHeight + 5;
-      // TODO dimension
-      creditText.x = 10;
-      creditText.y = 30;
-      addChild(creditText);
+      if (featureItem.title) {
+        titleText = new TextField();
+        titleText.defaultTextFormat = textFormat;
+        titleText.text = featureItem.title;
+        // TODO dimension
+        titleText.width = titleText.textWidth + 5;
+        titleText.height = titleText.textHeight + 5;
+        // TODO dimension
+        titleText.x = 10;
+        titleText.y = 10;
+        addChild(titleText);
+        textWidth = Math.max(textWidth, titleText.textWidth);
+      }
 
-      linkText = new TextField();
-      linkText.defaultTextFormat = textFormat;
-      linkText.text = featureItem.url;
-      // TODO dimension
-      linkText.width = linkText.textWidth + 5;
-      linkText.height = linkText.textHeight + 5;
-      // TODO dimension
-      linkText.x = 10;
-      linkText.y = 50;
-      addChild(linkText);
+      if (featureItem.credit) {
+        creditText = new TextField();
+        creditText.defaultTextFormat = textFormat;
+        creditText.text = featureItem.credit;
+        // TODO dimension
+        creditText.width = creditText.textWidth + 5;
+        creditText.height = creditText.textHeight + 5;
+        // TODO dimension
+        creditText.x = 10;
+        creditText.y = 30;
+        addChild(creditText);
+        textWidth = Math.max(textWidth, creditText.textWidth);
+      }
 
-      var textWidth = Math.max(titleText.textWidth, creditText.textWidth, linkText.textWidth) + 40;
+      if (featureItem.url) {
+        linkText = new TextField();
+        linkText.defaultTextFormat = textFormat;
+        linkText.text = featureItem.url;
+        // TODO dimension
+        linkText.width = linkText.textWidth + 5;
+        linkText.height = linkText.textHeight + 5;
+        // TODO dimension
+        linkText.x = 10;
+        linkText.y = 50;
+        addChild(linkText);
+        textWidth = Math.max(textWidth, linkText.textWidth);
+      }
 
-      textBackground.graphics.beginFill(0xFFFFFF);
-      // TODO dimension
-      textBackground.graphics.drawRect(0, 0, textWidth, 70);
-      textBackground.graphics.endFill();
+      if (textWidth > 0) {
+        textWidth += 20;
+
+        textBackground.graphics.beginFill(0xFFFFFF);
+        // TODO dimension
+        textBackground.graphics.drawRect(0, 0, textWidth, 70);
+        textBackground.graphics.endFill();
+      }
     }
   }
 }
