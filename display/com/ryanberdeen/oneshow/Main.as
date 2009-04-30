@@ -12,7 +12,6 @@ package com.ryanberdeen.oneshow {
   public class Main extends Sprite {
     public static var baseUrl:String;
 
-    private var messageTicker:MessageTicker;
     private var feedSprite:FeedMainSprite;
     public static var feedMonitor:Monitor;
     public static var connector:Connector;
@@ -31,28 +30,16 @@ package com.ryanberdeen.oneshow {
       addChild(background);
 
       var reelSprite:ReelSprite = new ReelSprite(500, 490);
+      reelSprite.x = 300;
       reelSprite.y = 60;
       addChild(reelSprite);
 
       feedSprite = new FeedMainSprite(300, 490);
-      feedSprite.x = 500;
       feedSprite.y = 60;
       addChild(feedSprite);
 
-      var tickerBackground:Shape = new Shape();
-      tickerBackground.y = stage.stageHeight - 50;
-      tickerBackground.graphics.beginFill(0x333333);
-      tickerBackground.graphics.drawRect(0, 0, stage.stageWidth, 50);
-      tickerBackground.graphics.endFill();
-      addChild(tickerBackground);
-
-      messageTicker = new MessageTicker();
-      messageTicker.y = stage.stageHeight - 45;
-      addChild(messageTicker);
-
       feedMonitor = new Monitor(Main.baseUrl +  'feed_items.json', 'feed_items', options.monitorInterval || 5000);
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
-      feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, messageTicker.itemsReceived);
       feedMonitor.start();
     }
   }

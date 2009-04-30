@@ -80,7 +80,7 @@ package com.ryanberdeen.oneshow.feed {
       top = bottom;
       var scrollOffset:int = topHeight - displayHeight;
       top.y = 0;
-      scrollRect = new Rectangle(0, scrollOffset + feedItemSpacing, displayWidth, displayHeight);
+      scrollRect = new Rectangle(0, scrollOffset, displayWidth, displayHeight);
       bottom = new Sprite();
       bottom.y = topHeight + feedItemSpacing;
       addChild(bottom);
@@ -90,7 +90,16 @@ package com.ryanberdeen.oneshow.feed {
     private function refill():void {
       bottomY = 0;
       while (bottomY <= displayHeight && bottomIndex < currentFeedItemCount) {
-        var feedItemSprite:FeedItemSprite = new FeedItemSprite(feedItems[bottomIndex], textFormat, displayWidth);
+        var feedItem:Object = feedItems[bottomIndex];
+        var feedItemSprite:FeedItemSprite;
+        switch (feedItem.source) {
+          case 'snapshot':
+            feedItemSprite = new FeedSnapshotSprite(feedItem, textFormat, displayWidth);
+            break;
+          default:
+            feedItemSprite = new FeedMessageSprite(feedItem, textFormat, displayWidth);
+        }
+
         feedItemSprite.y = bottomY;
         bottom.addChild(feedItemSprite);
         feedItemHeights[bottomIndex] = feedItemSprite.offsetHeight;

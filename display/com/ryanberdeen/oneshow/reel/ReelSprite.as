@@ -28,7 +28,7 @@ package com.ryanberdeen.oneshow.reel {
       this.displayHeight = displayHeight;
 
       var background:Shape = new Shape();
-      background.graphics.beginFill(0);
+      background.graphics.beginFill(0x4f5151);
       background.graphics.drawRect(0, 0, displayWidth, displayHeight);
       background.graphics.endFill();
       addChild(background);
