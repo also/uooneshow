@@ -12,6 +12,7 @@ package com.ryanberdeen.oneshow.reel {
     private var controller:ReelController;
 
     private var videoData:Object;
+    private var credit:FeaturedItemCreditSprite;
     private var connection:NetConnection;
     private var stream:NetStream;
     private var video:Video;
@@ -30,7 +31,11 @@ package com.ryanberdeen.oneshow.reel {
       connection.connect(null);
       buffered = false;
       metadataReceived = false;
-      // TODO should not start playing immediately
+
+      credit = new FeaturedItemCreditSprite(videoData);
+      credit.alpha = 0.5;
+      credit.y = displayHeight - credit.height;
+      addChild(credit);
     }
 
     public function start():void {
@@ -56,15 +61,19 @@ package com.ryanberdeen.oneshow.reel {
 
     private function timerHandler(e:Event):void {
       // TODO
-      if (stream.bufferLength >= stream.bufferTime) {
-        if (!buffered && metadataReceived) {
-          controller.itemReady();
-        }
-        buffered = true;
-      }
+
+      var buffered:Boolean = stream.bufferLength >= stream.bufferTime;
 
       if (stream.bytesLoaded == stream.bytesTotal) {
+        buffered = true;
         timer.stop();
+      }
+
+      if (buffered) {
+        if (!this.buffered && metadataReceived) {
+          controller.itemReady();
+        }
+        this.buffered = true;
       }
     }
 
@@ -117,7 +126,6 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     public function onMetaData(metadata:Object):void {
-      trace('metadata received');
       if (!metadataReceived) {
         // TODO dimensions
         var scale = Math.min(displayWidth / metadata.width, displayHeight / metadata.height);

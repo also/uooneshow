@@ -1,4 +1,5 @@
 package com.ryanberdeen.oneshow.reel {
+  import flash.display.Bitmap;
   import flash.display.DisplayObject;
   import flash.display.Shape;
   import flash.display.Sprite;
@@ -12,6 +13,7 @@ package com.ryanberdeen.oneshow.reel {
     private var controller:ReelController;
     private var displayWidth:int;
     private var displayHeight:int;
+    private var credit:FeaturedItemCreditSprite;
 
     private var imageLoader:Loader;
 
@@ -24,7 +26,8 @@ package com.ryanberdeen.oneshow.reel {
       imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
       addChild(imageLoader);
 
-      var credit:FeaturedItemCreditSprite = new FeaturedItemCreditSprite(image);
+      credit = new FeaturedItemCreditSprite(image);
+      credit.alpha = 0.5;
       credit.y = displayHeight - credit.height;
       addChild(credit);
     }
@@ -51,6 +54,7 @@ package com.ryanberdeen.oneshow.reel {
 
     private function completeHandler(event:Event):void {
       var image:DisplayObject = imageLoader.content;
+      Bitmap(image).smoothing = true;
       if (image.width > displayWidth) {
         image.width = displayWidth;
       }
@@ -58,6 +62,10 @@ package com.ryanberdeen.oneshow.reel {
         image.height = displayHeight;
       }
       image.scaleY = image.scaleX = Math.min(image.scaleY, image.scaleX);
+
+      image.x = (displayWidth - image.width) / 2;
+      image.y = (displayHeight - image.height) / 2;
+
       controller.itemReady();
     }
   }
