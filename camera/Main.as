@@ -38,7 +38,6 @@ package {
       video = new Video(640, 480);
       addChild(video);
       video.attachCamera(camera);
-      trace('camera muted:' + camera.muted);
 
       var snapshotSprite:Sprite = new Sprite();
       addChild(snapshotSprite);
@@ -52,6 +51,7 @@ package {
       ExternalInterface.addCallback('takeSnapshot', clearSnapshot);
       ExternalInterface.addCallback('showCameraSettings', showCameraSettings);
       ExternalInterface.addCallback('showPrivacySettings', showPrivacySettings);
+      ExternalInterface.addCallback('setReversed', setReversed);
     }
 
     private function showCameraSettings():void {
@@ -60,6 +60,17 @@ package {
 
     private function showPrivacySettings():void {
       Security.showSettings(SecurityPanel.PRIVACY);
+    }
+
+    private function setReversed(reversed:Boolean):void {
+      if (reversed) {
+        video.scaleX = -1;
+        video.x = video.width;
+      }
+      else {
+        video.scaleX = 1;
+        video.x = 0;
+      }
     }
 
     private function captureSnapshot():BitmapData {
@@ -139,7 +150,6 @@ package {
 
     private function takeSnapshot():Boolean {
       if (loader != null) {
-        trace('ignoring click while posting snapshot');
         return false; // a snapshot is being sent
       }
       var bitmap:BitmapData = captureSnapshot();
@@ -152,7 +162,6 @@ package {
     }
 
     private function snapshotPosted(snapshot:Object):void {
-      trace('snapshot posted: ' + snapshot.id);
       ExternalInterface.call('snapshotPosted', snapshot);
     }
   }
