@@ -3,7 +3,7 @@ class FeedItemsController < ApplicationController
     scope = FeedItem
     scope = scope.since_id(params[:since_id]) if params[:since_id]
 
-    @feed_items = scope.all :order => 'created_at DESC', :limit => 15
+    @feed_items = scope.all :order => 'id DESC', :limit => 15
     @feed_items.reverse
     respond_to do |format|
       format.html
