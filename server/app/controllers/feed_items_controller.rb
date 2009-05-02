@@ -3,10 +3,11 @@ class FeedItemsController < ApplicationController
     scope = FeedItem
     scope = scope.since_id(params[:since_id]) if params[:since_id]
 
-    @feed_items = scope.all :order => 'created_at, id DESC', :limit => 50
+    @feed_items = scope.all :order => 'created_at DESC, id DESC', :limit => 5
+    @feed_items.reverse!
     respond_to do |format|
       format.html
-      format.json { render :json => {:feed_items => @feed_items, :max_id => FeedItem.maximum(:id)} }
+      format.json { render :json => {:feed_items => @feed_items.to_json(:methods => [:image_url]), :max_id => FeedItem.maximum(:id)} }
     end
   end
 
