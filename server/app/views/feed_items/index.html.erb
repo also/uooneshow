@@ -3,26 +3,60 @@
   font-family: helvetica;
 }
 
-ul {
+ul#feed_items {
   list-style-type: none;
-  margin: 0;
+  width: 660px;
+  margin: 0 auto;
   padding: 0;
 }
 
-li {
-  padding: 0;
+ul#feed_items li {
+  padding: 10px;
   margin: 0 0 1em 0;
   overflow: hidden;
   position: relative;
+  background-color: #ccc;
+}
+
+.feed_item_wrapper {
+  margin-top: 10px;
+  overflow: hidden;
 }
 
 .feed_item_text {
-  margin-left: 170px;
+  font-size: 24px;
+  border: 0;
+  margin: 0;
+  color: #333;
+}
+
+.profile_image {
+  float: left;
+  width: 48px;
+  height: 48px;
+  background-color: #333;
+}
+
+.profile_image img {
+  width: 48px;
+  height: 48px;
+}
+
+.tweet .feed_item_text {
+  margin-left: 58px;
+}
+
+.snapshot .feed_item_text {
+  margin-top: 10px;
 }
 </style>
-<ul>
-<% @feed_items.each do |feed_item| %><li id="feed_item_<%= feed_item.id %>">
-  <div class="snapshot"><% if feed_item.image_url %><img src="<%= feed_item.image_url %>" alt="Snapshot"/><% end %></div>
-  <div><div class="feed_item_text"><%=h feed_item.text %></div></div>
-</li>
-<% end %></ul>
+<ul id="feed_items">
+<% @feed_items.each do |feed_item|
+  partial = case feed_item.source
+  when 'snapshot'
+    'snapshot'
+  when 'twitter'
+    'tweet'
+  end
+  concat render :partial => partial, :locals => {:feed_item => feed_item}
+end %></ul>
