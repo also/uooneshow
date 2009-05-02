@@ -44,6 +44,8 @@ class FeedItem < ActiveRecord::Base
       snapshot.path
     elsif profile_image_url
       profile_image_url
+    elsif medium_image_url
+      medium_image_url
     end
   end
 end

@@ -57,6 +57,8 @@ ul#feed_items li {
     'snapshot'
   when 'twitter'
     'tweet'
+  when 'flickr'
+    'photo'
   end
-  concat render :partial => partial, :locals => {:feed_item => feed_item}
+  concat render :partial => partial, :locals => {:feed_item => feed_item} if partial
 end %></ul>
