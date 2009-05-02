@@ -70,6 +70,7 @@ package com.ryanberdeen.oneshow.feed {
 
     public function timerHandler(e:Event):void {
       removeChild(text);
+      text = null;
       alphaTween = new Tween(this, 'alpha', Regular.easeInOut, alpha, 0, 1, true);
     }
   }
