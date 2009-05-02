@@ -31,8 +31,8 @@ package com.ryanberdeen.oneshow.feed {
     private var tween:Tween;
 
     private var feedItemSpacing:int = 10;
-    private var feedItemDisplayTime:int = 2000;
-    private var feedItemScrollTime:int = 1000;
+    private var feedItemDisplayTime:int = 4000;
+    private var feedItemScrollSpeed:int = 200; // speed in pixels/secon
 
     public function FeedMainSprite(displayWidth:int, displayHeight:int) {
       this.displayWidth = displayWidth;
@@ -136,7 +136,7 @@ package com.ryanberdeen.oneshow.feed {
         }
         currentIndex++;
 
-        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, feedItemScrollTime / 1000, true);
+        tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, (scrollEndY - scrollY) / feedItemScrollSpeed, true);
         tween.addEventListener('motionFinish', advanceEnd);
         //scrollY = scrollEndY;
         //advanceEnd(null);
