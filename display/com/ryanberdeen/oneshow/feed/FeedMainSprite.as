@@ -110,7 +110,7 @@ package com.ryanberdeen.oneshow.feed {
 
     private function advance():void {
       if (currentIndex <= currentFeedItemCount) {
-        if (currentIndex == bottomIndex) {
+        if (currentIndex < currentFeedItemCount && currentIndex == bottomIndex) {
           nextSet();
         }
         var scrollEndY:int;
@@ -125,6 +125,8 @@ package com.ryanberdeen.oneshow.feed {
 
         tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, scrollEndY, feedItemScrollTime / 1000, true);
         tween.addEventListener('motionFinish', advanceEnd);
+        //scrollY = scrollEndY;
+        //advanceEnd(null);
       }
       else {
         // advanced past last feed item
