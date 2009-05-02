@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20090502033712) do
     t.string   "profile_image_url"
     t.string   "from_user"
     t.string   "from_user_id"
-    t.string   "url_medium"
     t.string   "medium_image_url"
   end
 
