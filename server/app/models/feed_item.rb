@@ -23,6 +23,22 @@ class FeedItem < ActiveRecord::Base
     end
   end
 
+  def self.update_flickr
+    flickr = Flickr.new('config/flickr.yml')
+    photos = flickr.photos.search(:tags => 'uooneshow')
+    p photos.first
+    photos.collect do |photo|
+      FeedItem.create(
+        :source => 'flickr',
+        :remote_id => photo.id,
+        :text => photo.title,
+        :medium_image_url => photo.url,
+        :from_user => photo.owner_name,
+        :from_user_id => photo.owner
+      )
+    end
+  end
+
   def image_url
     if snapshot
       snapshot.path
