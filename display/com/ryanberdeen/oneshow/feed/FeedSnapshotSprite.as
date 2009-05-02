@@ -49,7 +49,11 @@ package com.ryanberdeen.oneshow.feed {
       background.graphics.drawRect(0, 0, displayWidth - PADDING * 2, offsetHeight);
       background.graphics.endFill();
 
-      imageUrl = Main.baseUrl + 'snapshots/' + itemData.snapshot_id + '.png';
+      // TODO null images?
+      imageUrl = itemData.image_url || '';
+      if (imageUrl.indexOf('http') != 0) {
+        imageUrl = Main.baseUrl.substring(0, Main.baseUrl.length - 1) + imageUrl;
+      }
 
       imageLoader = new Loader();
       imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
@@ -59,7 +63,6 @@ package com.ryanberdeen.oneshow.feed {
       imageLoader.scaleX = imageLoader.scaleY = imageScale;
       imageLoader.load(new URLRequest(imageUrl));
       addChild(imageLoader);
-
     }
 
     private function ioErrorHandler(e:IOErrorEvent):void {

@@ -7,7 +7,7 @@ class FeedItemsController < ApplicationController
     @feed_items.reverse!
     respond_to do |format|
       format.html
-      format.json { render :json => {:feed_items => @feed_items.to_json(:methods => [:image_url]), :max_id => FeedItem.maximum(:id)} }
+      format.json { render :json => {:feed_items => @feed_items, :max_id => FeedItem.maximum(:id)} }
     end
   end
 

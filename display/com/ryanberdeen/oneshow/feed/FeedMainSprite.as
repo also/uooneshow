@@ -107,6 +107,7 @@ package com.ryanberdeen.oneshow.feed {
         var feedItemSprite:FeedItemSprite;
         switch (feedItem.source) {
           case 'snapshot':
+          case 'flickr':
             feedItemSprite = new FeedSnapshotSprite(feedItem, textFormat, displayWidth);
             break;
           default:

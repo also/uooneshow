@@ -48,4 +48,8 @@ class FeedItem < ActiveRecord::Base
       medium_image_url
     end
   end
+
+  def to_json(*args)
+    super(:methods => [:image_url])
+  end
 end
