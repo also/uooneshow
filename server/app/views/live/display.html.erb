@@ -3,4 +3,4 @@
 
 <div id="live_display"></div>
 
-<%= javascript_tag "initLive({baseUrl: #{root_url.to_json}})" %>
+<%= javascript_tag "initLive({baseUrl: #{root_url.to_json}, connectorHost: location.hostname})" %>
