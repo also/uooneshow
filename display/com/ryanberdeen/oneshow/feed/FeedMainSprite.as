@@ -70,7 +70,7 @@ package com.ryanberdeen.oneshow.feed {
       bottom = new Sprite();
       addChild(bottom);
       nextSet();
-      advance();
+      advanceEnd(null);
     }
 
     private function restart():void {
@@ -124,9 +124,6 @@ package com.ryanberdeen.oneshow.feed {
 
     private function advance():void {
       if (currentIndex <= currentFeedItemCount) {
-        if (currentIndex < currentFeedItemCount && currentIndex == bottomIndex) {
-          nextSet();
-        }
         var scrollEndY:int;
         if (currentIndex == currentFeedItemCount) {
           // scrolling last feed item off screen
@@ -149,6 +146,9 @@ package com.ryanberdeen.oneshow.feed {
     }
 
     private function advanceEnd(e:Event):void {
+      if (currentIndex < currentFeedItemCount && currentIndex == bottomIndex) {
+        nextSet();
+      }
       tween = null;
       var timer:Timer = new Timer(feedItemDisplayTime, 1);
       timer.addEventListener('timer', scrollTime);
