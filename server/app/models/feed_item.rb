@@ -11,7 +11,15 @@ class FeedItem < ActiveRecord::Base
     response_string = open("http://search.twitter.com/search.json?tag=uooneshow&rpp=100&since_id=#{max_twitter_id}").read
     response = ActiveSupport::JSON.decode(response_string)
     response['results'].collect do |tweet|
-      FeedItem.create :source => 'twitter', :remote_id => tweet['id'], :text => tweet['text'], :profile_image_url => tweet['profile_image_url']
+      FeedItem.create(
+        :source => 'twitter',
+        :remote_id => tweet['id'],
+        :text => tweet['text'],
+        :profile_image_url => tweet['profile_image_url'],
+        :from_user => tweet['from_user'],
+        :from_user_id => tweet['from_user_id'],
+        :created_at => tweet['created_at']
+      )
     end
   end
 

@@ -17,5 +17,5 @@ var snapshotPosted = function(snapshot) {
 };
 
 var initLive = function(flashVars) {
-  swfobject.embedSWF('/swfs/display.swf', 'live_display', 640, 480, '9.0.0', null, flashVars);
+  swfobject.embedSWF('/swfs/display.swf', 'live_display', 800, 600, '9.0.0', null, flashVars);
 };

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090429040939) do
+ActiveRecord::Schema.define(:version => 20090502022828) do
 
   create_table "feed_items", :force => true do |t|
     t.string   "text"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20090429040939) do
     t.string   "source"
     t.string   "remote_id"
     t.string   "profile_image_url"
+    t.string   "from_user"
+    t.integer  "from_user_id"
   end
 
   create_table "reel_items", :force => true do |t|
