@@ -22,7 +22,7 @@ package com.ryanberdeen.oneshow {
       Main.baseUrl = options.baseUrl || 'http://localhost:3000/';
 
       connector = new Connector();
-      connector.connect('localhost', 1843);
+      connector.connect(options.connectorHost || 'localhost', options.connectorPort || 1843);
 
       var background:Shape = new Shape();
       background.graphics.beginFill(0xdbddde);

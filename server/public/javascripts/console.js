@@ -44,8 +44,9 @@ var send = function(message) {
 };
 
 var connect = function() {
-  onEvent('connecting to localhost:1843');
-  rjs.connect('localhost', 1843, {
+  var host = location.hostname;
+  onEvent('connecting to ' + location.hostname + ':1843');
+  rjs.connect(location.hostname, 1843, {
     onSocketConnect: function(callback) {
       onEvent('connected');
     },
