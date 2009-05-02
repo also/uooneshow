@@ -73,6 +73,19 @@ package com.ryanberdeen.oneshow.feed {
       advance();
     }
 
+    private function restart():void {
+      started = false;
+      if (top != null) {
+        removeChild(top);
+        top = null;
+      }
+      if (bottom != null) {
+        removeChild(bottom);
+        bottom = null;
+      }
+      start();
+    }
+
     private function nextSet():void {
       if (top != null) {
         removeChild(top);
@@ -130,7 +143,7 @@ package com.ryanberdeen.oneshow.feed {
       }
       else {
         // advanced past last feed item
-        start();
+        restart();
       }
     }
 
@@ -157,7 +170,9 @@ package com.ryanberdeen.oneshow.feed {
 
     public function itemsReceived(e:ItemsReceivedEvent):void {
       feedItems = e.items;
-      start();
+      if (!started) {
+        start();
+      }
     }
   }
 }
