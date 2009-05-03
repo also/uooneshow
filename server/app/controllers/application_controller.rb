@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  before_filter :require_admin
+
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  
+  protected
+    def require_admin
+
+    end
 end

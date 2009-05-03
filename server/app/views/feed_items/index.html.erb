@@ -42,16 +42,23 @@ ul#feed_items li {
   height: 48px;
 }
 
-.tweet .feed_item_text {
+.twitter .feed_item_text {
   margin-left: 58px;
 }
 
-.snapshot .feed_item_text {
+.snapshot .feed_item_text,
+.flickr .feed_item_text {
   margin-top: 10px;
+}
+
+.actions {
+  clear: both;
 }
 </style>
 <ul id="feed_items">
-<% @feed_items.each do |feed_item|
+<% @feed_items.each do |feed_item| %>
+<li class="<%= feed_item.source %>">
+<%
   partial = case feed_item.source
   when 'snapshot'
     'snapshot'
@@ -61,4 +68,7 @@ ul#feed_items li {
     'photo'
   end
   concat render :partial => partial, :locals => {:feed_item => feed_item} if partial
-end %></ul>
+%>
+<%= render :partial => 'actions', :locals => {:feed_item => feed_item} if is_admin? %>
+</li>
+<% end %></ul>

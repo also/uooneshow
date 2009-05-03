@@ -3,6 +3,8 @@ require 'open-uri'
 class FeedItem < ActiveRecord::Base
   belongs_to :snapshot
 
+  named_scope :hidden, {:conditions => {:hidden => true}}
+  named_scope :visible, {:conditions => {:hidden => false}}
   named_scope :since_id, lambda { |id| {:conditions => ['id > ?', id]} }
   named_scope :from, lambda { |source| {:conditions => {:source => source.to_s}} }
 
@@ -47,6 +49,14 @@ class FeedItem < ActiveRecord::Base
     elsif medium_image_url
       medium_image_url
     end
+  end
+
+  def hide
+    update_attribute(:hidden, true)
+  end
+
+  def show
+    update_attribute(:hidden, false)
   end
 
   def to_json(*args)

@@ -1,6 +1,8 @@
 class FeedItemsController < ApplicationController
+  skip_before_filter :require_admin, :only => [:index, :new, :create]
+
   def index
-    scope = FeedItem
+    scope = FeedItem.visible
     scope = scope.since_id(params[:since_id]) if params[:since_id]
 
     @feed_items = scope.all :order => 'created_at DESC, id DESC', :limit => 5
@@ -12,6 +14,12 @@ class FeedItemsController < ApplicationController
   end
 
   def new
+  end
+  
+  def hide
+    feed_item = FeedItem.find(params[:id])
+    feed_item.hide
+    redirect_to feed_items_url
   end
 
   def create
