@@ -47,6 +47,14 @@ package com.ryanberdeen.oneshow.reel {
       timer.stop();
     }
 
+    public function pause():void {
+      stream.pause();
+    }
+
+    public function resume():void {
+      stream.resume();
+    }
+
     public function get isTimed():Boolean {
       return true;
     }

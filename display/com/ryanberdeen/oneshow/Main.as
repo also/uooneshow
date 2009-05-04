@@ -90,5 +90,12 @@ package com.ryanberdeen.oneshow {
       tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, 0, 2, true);
       //tween.addEventListener('motionFinish', mainTweenEndHandler);
     }
+
+    public static function resolveUrl(url:String):String {
+      if (url.indexOf('http') != 0) {
+        url = baseUrl.substring(0, baseUrl.length - 1) + url;
+      }
+      return url;
+    }
   }
 }

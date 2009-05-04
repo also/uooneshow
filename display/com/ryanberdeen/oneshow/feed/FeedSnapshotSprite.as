@@ -50,10 +50,7 @@ package com.ryanberdeen.oneshow.feed {
       background.graphics.endFill();
 
       // TODO null images?
-      imageUrl = itemData.image_url || '';
-      if (imageUrl.indexOf('http') != 0) {
-        imageUrl = Main.baseUrl.substring(0, Main.baseUrl.length - 1) + imageUrl;
-      }
+      imageUrl = Main.resolveUrl(itemData.image_url) || '';
 
       imageLoader = new Loader();
       imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);

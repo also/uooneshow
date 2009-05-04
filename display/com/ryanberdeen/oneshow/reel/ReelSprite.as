@@ -11,7 +11,7 @@ package com.ryanberdeen.oneshow.reel {
     private var displayWidth:int;
     private var displayHeight:int;
 
-    private var items:Array;
+    public var items:Array;
     private var currentItemSprite:Sprite;
     private var nextItemSprite:Sprite;
     private var currentItemIndex:int;
@@ -19,6 +19,7 @@ package com.ryanberdeen.oneshow.reel {
 
     private var timeExpired:Boolean;
     private var nextItemReady:Boolean;
+    private var currentItemFinished:Boolean;
 
     private var itemDisplayTime:int = 5000;
     private var jsonLoader:JsonLoader;
@@ -43,6 +44,20 @@ package com.ryanberdeen.oneshow.reel {
       prepareNextItem();
     }
 
+    public function pause():void {
+      ReelItem(currentItemSprite).pause();
+      if (timer != null) {
+        //timer.pause();
+      }
+    }
+
+    public function resume():void {
+      ReelItem(currentItemSprite).resume();
+      if (timer != null) {
+        //timer.resume();
+      }
+    }
+
     private function reelItemsLoaded(result:Object):void {
       items = result.reel_items;
       start();
@@ -56,7 +71,19 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     public function itemFinished():void {
+      //currentItemFinished = true;
+      //if (timer != null) {
+      //  timer.stop();
+      //}
+      //timerHandler(null);
+    }
 
+    private function timerHandler(e:Event):void {
+      timer = null;
+      timeExpired = true;
+      if (nextItemReady) {
+        advance();
+      }
     }
 
     private function prepareNextItem():void {
@@ -93,14 +120,6 @@ package com.ryanberdeen.oneshow.reel {
       timer.start();
 
       prepareNextItem();
-    }
-
-    private function timerHandler(e:Event):void {
-      timer = null;
-      timeExpired = true;
-      if (nextItemReady) {
-        advance();
-      }
     }
   }
 }

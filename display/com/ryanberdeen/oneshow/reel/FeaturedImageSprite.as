@@ -1,10 +1,13 @@
 package com.ryanberdeen.oneshow.reel {
+  import com.ryanberdeen.oneshow.Main;
+
   import flash.display.Bitmap;
   import flash.display.DisplayObject;
   import flash.display.Shape;
   import flash.display.Sprite;
   import flash.display.Loader;
   import flash.events.Event;
+  import flash.events.IOErrorEvent;
   import flash.net.URLRequest;
   import flash.text.TextField;
   import flash.text.TextFormat;
@@ -22,8 +25,9 @@ package com.ryanberdeen.oneshow.reel {
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
       imageLoader = new Loader();
-      imageLoader.load(new URLRequest(image.media_url));
+      imageLoader.load(new URLRequest(Main.resolveUrl(image.media_url)));
       imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+      imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
       addChild(imageLoader);
 
       credit = new FeaturedItemCreditSprite(image);
@@ -52,6 +56,14 @@ package com.ryanberdeen.oneshow.reel {
       // nothing to do
     }
 
+    public function pause():void {
+      // nothing to do
+    }
+
+    public function resume():void {
+      // nothing to do
+    }
+
     private function completeHandler(event:Event):void {
       var image:DisplayObject = imageLoader.content;
       Bitmap(image).smoothing = true;
@@ -67,6 +79,11 @@ package com.ryanberdeen.oneshow.reel {
       image.y = (displayHeight - image.height) / 2;
 
       controller.itemReady();
+    }
+
+    private function ioErrorHandler(event:IOErrorEvent):void {
+      // TODO
+      trace('io error: ' + event.text)
     }
   }
 }
