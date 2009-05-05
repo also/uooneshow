@@ -25,6 +25,8 @@ package com.ryanberdeen.oneshow {
     public static var baseUrl:String;
 
     private var feedSprite:FeedMainSprite;
+    private var reelSprite:ReelSprite;
+    private var liveMessageSprite:LiveMessageSprite;
     public static var feedMonitor:Monitor;
     public static var connector:Connector;
     public static var options:Object;
@@ -32,6 +34,8 @@ package com.ryanberdeen.oneshow {
     public function Main() {
       options = root.loaderInfo.parameters;
       Main.baseUrl = options.baseUrl || 'http://localhost:3000/';
+
+      opaqueBackground = 0xdbddde;
 
       start();
     }
@@ -50,13 +54,7 @@ package com.ryanberdeen.oneshow {
       connector = new Connector();
       connector.connect(options.connectorHost || 'localhost', options.connectorPort || 1843);
 
-      var background:Shape = new Shape();
-      background.graphics.beginFill(0xdbddde);
-      background.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-      background.graphics.endFill();
-      addChild(background);
-
-      var reelSprite:ReelSprite = new ReelSprite(550, 490);
+      reelSprite = new ReelSprite(550, 490);
       reelSprite.x = 240;
       reelSprite.y = HEADER_HEIGHT;
       addChild(reelSprite);
@@ -69,10 +67,10 @@ package com.ryanberdeen.oneshow {
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
       feedMonitor.start();
 
-      var liveMessage:Sprite = new LiveMessageSprite();
-      liveMessage.x = 100;
-      liveMessage.y = 100;
-      addChild(liveMessage);
+      liveMessageSprite = new LiveMessageSprite();
+      liveMessageSprite.x = 100;
+      liveMessageSprite.y = 100;
+      addChild(liveMessageSprite);
 
       connector.subscribe('controller', this);
       scrollRect = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
@@ -89,6 +87,29 @@ package com.ryanberdeen.oneshow {
       state = STATE_INTERMEDIATE;
       tween = new Tween(this, 'scrollY', Regular.easeInOut, scrollY, 0, 2, true);
       //tween.addEventListener('motionFinish', mainTweenEndHandler);
+    }
+
+    public function handle_reset(message:String):void {
+      reset();
+    }
+
+    public function handle_stop(message:String):void {
+      stop();
+    }
+
+    private function reset():void {
+      connector.close();
+      feedMonitor.stop();
+      stop();
+      start();
+    }
+
+    private function stop():void {
+      reelSprite.stop();
+      feedSprite.stop();
+      removeChild(reelSprite);
+      removeChild(feedSprite);
+      removeChild(liveMessageSprite);
     }
 
     public static function resolveUrl(url:String):String {

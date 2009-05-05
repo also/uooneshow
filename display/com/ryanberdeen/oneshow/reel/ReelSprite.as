@@ -123,5 +123,12 @@ package com.ryanberdeen.oneshow.reel {
 
       prepareNextItem();
     }
+
+    public function stop():void {
+      if (timer != null) {
+        timer.stop();
+      }
+      ReelItem(currentItemSprite).stop();
+    }
   }
 }

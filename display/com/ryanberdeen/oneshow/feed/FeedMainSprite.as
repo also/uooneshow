@@ -29,6 +29,7 @@ package com.ryanberdeen.oneshow.feed {
     // TO THE TWEEN ARE HELD SO IT WILL BE GARBAGE COLLECTED UNLESS I PUT IT IN THIS HERE
     // CLASS VARIABLE.
     private var tween:Tween;
+    private var timer:Timer;
 
     private var feedItemSpacing:int = 10;
     private var feedItemDisplayTime:int = 4000;
@@ -71,6 +72,15 @@ package com.ryanberdeen.oneshow.feed {
       addChild(bottom);
       nextSet();
       advanceEnd(null);
+    }
+
+    public function stop():void {
+      if (timer != null) {
+        timer.stop();
+      }
+      if (tween != null) {
+        tween.stop();
+      }
     }
 
     private function restart():void {
@@ -150,12 +160,13 @@ package com.ryanberdeen.oneshow.feed {
         nextSet();
       }
       tween = null;
-      var timer:Timer = new Timer(feedItemDisplayTime, 1);
+      timer = new Timer(feedItemDisplayTime, 1);
       timer.addEventListener('timer', scrollTime);
       timer.start();
     }
 
     private function scrollTime(e:Event):void {
+      timer = null;
       advance();
     }
 
