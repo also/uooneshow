@@ -1,6 +1,6 @@
 class ReelItemsController < ApplicationController
   def index
-    @reel_items = ReelItem.all :order => 'created_at ASC'
+    @reel_items = ReelItem.all :order => 'position ASC, created_at DESC'
 
     respond_to do |format|
       format.json { render :json => {:reel_items => @reel_items} }
