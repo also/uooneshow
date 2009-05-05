@@ -42,6 +42,8 @@ package {
       var snapshotSprite:Sprite = new Sprite();
       addChild(snapshotSprite);
       snapshotGraphics = snapshotSprite.graphics;
+      snapshotSprite.scaleX = -1;
+      snapshotSprite.x = 640;
 
       showingSnapshot = false;
 
@@ -52,6 +54,7 @@ package {
       ExternalInterface.addCallback('showCameraSettings', showCameraSettings);
       ExternalInterface.addCallback('showPrivacySettings', showPrivacySettings);
       ExternalInterface.addCallback('setReversed', setReversed);
+      setReversed(true);
     }
 
     private function showCameraSettings():void {
