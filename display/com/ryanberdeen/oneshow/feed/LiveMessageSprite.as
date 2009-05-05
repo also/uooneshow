@@ -19,20 +19,22 @@ package com.ryanberdeen.oneshow.feed {
     private var background:Shape;
     private var timer:Timer;
     private var alphaTween:Tween;
+    private var message:Array;
+    private var displayWidth:Number;
 
-    public function LiveMessageSprite() {
+    public function LiveMessageSprite(displayWidth:Number, displayHeight:Number) {
+      this.displayWidth = displayWidth;
       Main.connector.subscribe('feed', this);
 
       textFormat = new TextFormat();
-      textFormat.font = 'Helvetica';
+      textFormat.font = 'Rockwell';
       textFormat.size = 22;
-      textFormat.color = 0x333333;
-      textFormat.bold = true;
+      textFormat.color = 0xffffff;
+      //textFormat.bold = true;
 
       background = new Shape();
-
-      background.graphics.beginFill(0x999999);
-      background.graphics.drawRect(0, 0, 100, 100);
+      background.graphics.beginFill(0x0070FF);
+      background.graphics.drawRect(0, 0, displayWidth, displayHeight);
       background.graphics.endFill();
       addChild(background);
 
@@ -50,7 +52,7 @@ package com.ryanberdeen.oneshow.feed {
       text.cacheAsBitmap = true;
       text.x = 10;
       text.y = 10;
-      text.width = 400;
+      text.width = displayWidth - 20;
       text.alpha = .2;
 
       text.defaultTextFormat = textFormat;
@@ -59,13 +61,19 @@ package com.ryanberdeen.oneshow.feed {
       text.text = o.text;
       text.height = text.textHeight + 5;
 
-      background.width = 420;
-      background.height = Math.max(200, text.textHeight + 20);
-      alpha = .6;
+      alpha = 1;
 
       timer = new Timer(5000, 1);
       timer.addEventListener('timer', timerHandler);
       timer.start();
+    }
+
+    public function handle_hide(message:String):void {
+
+    }
+
+    public function handle_show(message:String):void {
+
     }
 
     public function timerHandler(e:Event):void {

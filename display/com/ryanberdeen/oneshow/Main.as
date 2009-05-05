@@ -16,6 +16,7 @@ package com.ryanberdeen.oneshow {
 
   public class Main extends Sprite {
     private static const HEADER_HEIGHT:Number = 60;
+    private static const BODY_HEIGHT:Number = 490;
 
     private static const STATE_MAIN = 'main';
     private static const STATE_FULLSCREEN = 'fullscreen';
@@ -54,12 +55,12 @@ package com.ryanberdeen.oneshow {
       connector = new Connector();
       connector.connect(options.connectorHost || 'localhost', options.connectorPort || 1843);
 
-      reelSprite = new ReelSprite(550, 490);
+      reelSprite = new ReelSprite(550, BODY_HEIGHT);
       reelSprite.x = 240;
       reelSprite.y = HEADER_HEIGHT;
       addChild(reelSprite);
 
-      feedSprite = new FeedMainSprite(240, 490);
+      feedSprite = new FeedMainSprite(240, BODY_HEIGHT);
       feedSprite.y = HEADER_HEIGHT;
       addChild(feedSprite);
 
@@ -67,9 +68,8 @@ package com.ryanberdeen.oneshow {
       feedMonitor.addEventListener(ItemsReceivedEvent.TYPE, feedSprite.itemsReceived);
       feedMonitor.start();
 
-      liveMessageSprite = new LiveMessageSprite();
-      liveMessageSprite.x = 100;
-      liveMessageSprite.y = 100;
+      liveMessageSprite = new LiveMessageSprite(stage.stageWidth, stage.stageHeight - HEADER_HEIGHT - BODY_HEIGHT);
+      liveMessageSprite.y = HEADER_HEIGHT + BODY_HEIGHT;
       addChild(liveMessageSprite);
 
       connector.subscribe('controller', this);
