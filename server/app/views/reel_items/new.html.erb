@@ -1,0 +1,10 @@
+<% form_for :reel_item, :url => {:action => :create} do |f| %>
+<p><%= f.label :media_type %>: <%= f.select :type, [:image, :video] %></p>
+<p><%= f.label :media_url %>: <%= f.text_field :media_url %></p>
+<p><%= f.label :title %>: <%= f.text_field :title %></p>
+<p><%= f.label :credit %>: <%= f.text_area :credit, :rows => 5, :cols => 80 %></p>
+<p><%= f.label :url %>: <%= f.text_field :url %></p>
+<p><%= f.label :position %>: <%= f.text_field :position %></p>
+<p>
+<p><%= f.submit %></p>
+<% end %>

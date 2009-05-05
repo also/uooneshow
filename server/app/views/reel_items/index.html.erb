@@ -1,0 +1,23 @@
+<p><%= link_to 'new', new_reel_item_url %></p>
+<table>
+  <thead><tr>
+    <th>ID</th>
+    <th>type</th>
+    <th>file</th>
+    <th>Title</th>
+    <th>Credit</th>
+    <th>URL</th>
+    <th>Order</th>
+  </tr></thead>
+<% @reel_items.each do |reel_item| %>
+  <tr>
+    <td><%= reel_item.id %></td>
+    <td><%= reel_item.media_type %></td>
+    <td><%= reel_item.media_url %></td>
+    <td><%= reel_item.title %></td>
+    <td><%= reel_item.credit %></td>
+    <td><%= reel_item.url %></td>
+    <td><%= reel_item.position %></td>
+  </tr>
+<% end %>
+</table>
