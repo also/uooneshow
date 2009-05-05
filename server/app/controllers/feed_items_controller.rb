@@ -24,7 +24,11 @@ class FeedItemsController < ApplicationController
 
   def create
     attributes = params[:feed_item]
-    attributes[:source] = 'snapshot'
+    if attributes[:snapshot_id].empty?
+      attributes[:source] ||= 'direct'
+    else
+      attributes[:source] ||= 'snapshot'
+    end
     if @feed_item = FeedItem.create(attributes)
       Display.send_message('display-feed new_message ' + @feed_item.to_json)
       redirect_to new_feed_item_url

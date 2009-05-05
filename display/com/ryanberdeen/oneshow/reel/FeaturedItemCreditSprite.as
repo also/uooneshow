@@ -16,7 +16,7 @@ package com.ryanberdeen.oneshow.reel {
       var textFormat:TextFormat = new TextFormat();
       textFormat.font = 'Helvetica';
       textFormat.size = 12;
-      textFormat.color = 0x333333;
+      textFormat.color = 0xffffff;
       textFormat.bold = true;
 
       var textWidth:Number = 0;
@@ -75,9 +75,9 @@ package com.ryanberdeen.oneshow.reel {
       }
 
       if (textWidth > 0) {
-        textWidth += 20;
+        textWidth += 25;
 
-        textBackground.graphics.beginFill(0xFFFFFF);
+        textBackground.graphics.beginFill(0x4f5151);
         var backgroundWidth = textWidth;
         if (backgroundWidth / displayWidth > .8) {
           backgroundWidth = displayWidth;

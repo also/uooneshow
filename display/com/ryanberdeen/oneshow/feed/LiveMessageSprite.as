@@ -45,6 +45,14 @@ package com.ryanberdeen.oneshow.feed {
       if (text != null) {
         removeChild(text);
       }
+      if (alphaTween != null) {
+        alphaTween.stop();
+        alphaTween = null;
+        if (timer != null) {
+          timer.stop();
+          timer = null;
+        }
+      }
 
       var o:Object = JSON.decode(message);
       text = new TextField();
@@ -80,6 +88,11 @@ package com.ryanberdeen.oneshow.feed {
       removeChild(text);
       text = null;
       alphaTween = new Tween(this, 'alpha', Regular.easeInOut, alpha, 0, 1, true);
+      alphaTween.addEventListener('motionFinish', alphaTweenFinishedHandler);
+    }
+    
+    private function alphaTweenFinishedHandler(e:Event):void {
+      alphaTween = null;
     }
   }
 }

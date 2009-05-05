@@ -153,7 +153,7 @@ package com.ryanberdeen.oneshow.reel {
         }
       }
 
-      this.duration = metadata.duration * 1000;
+      this.duration = metadata.duration * 1000 + 3000;
       metadataReceived = true;
     }
   }

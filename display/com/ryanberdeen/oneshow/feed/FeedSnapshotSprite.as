@@ -50,16 +50,18 @@ package com.ryanberdeen.oneshow.feed {
       background.graphics.endFill();
 
       // TODO null images?
-      imageUrl = Main.resolveUrl(itemData.image_url) || '';
+      if (itemData.image_url) {
+        imageUrl = Main.resolveUrl(itemData.image_url)
 
-      imageLoader = new Loader();
-      imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-      imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
-      imageLoader.x = PADDING * 2;
-      imageLoader.y = text.textHeight + PADDING * 2;
-      imageLoader.scaleX = imageLoader.scaleY = imageScale;
-      imageLoader.load(new URLRequest(imageUrl));
-      addChild(imageLoader);
+        imageLoader = new Loader();
+        imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+        imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+        imageLoader.x = PADDING * 2;
+        imageLoader.y = text.textHeight + PADDING * 2;
+        imageLoader.scaleX = imageLoader.scaleY = imageScale;
+        imageLoader.load(new URLRequest(imageUrl));
+        addChild(imageLoader);
+      }
     }
 
     private function ioErrorHandler(e:IOErrorEvent):void {

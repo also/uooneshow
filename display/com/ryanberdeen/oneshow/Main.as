@@ -38,6 +38,18 @@ package com.ryanberdeen.oneshow {
 
       opaqueBackground = 0xdbddde;
 
+      var headerSprite:HeaderSprite = new HeaderSprite();
+
+      headerSprite.x = stage.stageWidth - 10 - headerSprite.width;
+      headerSprite.y = 10;
+
+      addChild(headerSprite);
+      
+      var footerSprite:FooterSprite = new FooterSprite();
+      footerSprite.x = 10;
+      footerSprite.y = stage.stageHeight - footerSprite.height - 10;
+      addChild(footerSprite);
+
       start();
     }
 
@@ -58,10 +70,10 @@ package com.ryanberdeen.oneshow {
       reelSprite = new ReelSprite(550, BODY_HEIGHT);
       reelSprite.x = 240;
       reelSprite.y = HEADER_HEIGHT;
-      addChild(reelSprite);
+      addChildAt(reelSprite, 0);
 
-      feedSprite = new FeedMainSprite(240, BODY_HEIGHT);
-      feedSprite.y = HEADER_HEIGHT;
+      feedSprite = new FeedMainSprite(240, BODY_HEIGHT + HEADER_HEIGHT);
+      feedSprite.y = 0;
       addChild(feedSprite);
 
       feedMonitor = new Monitor(Main.baseUrl +  'feed_items.json', 'feed_items', options.monitorInterval || 5000);

@@ -66,7 +66,7 @@ ul#feed_items li {
     'tweet'
   when 'flickr'
     'photo'
-  when 'sms'
+  else
     'sms'
   end
   concat render :partial => partial, :locals => {:feed_item => feed_item} if partial

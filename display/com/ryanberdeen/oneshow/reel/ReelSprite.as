@@ -28,12 +28,6 @@ package com.ryanberdeen.oneshow.reel {
       this.displayWidth = displayWidth;
       this.displayHeight = displayHeight;
 
-      var background:Shape = new Shape();
-      background.graphics.beginFill(0x4f5151);
-      background.graphics.drawRect(0, 0, displayWidth, displayHeight);
-      background.graphics.endFill();
-      addChild(background);
-
       jsonLoader = new JsonLoader(Main.baseUrl + 'reel_items.json', reelItemsLoaded);
       jsonLoader.load();
 
