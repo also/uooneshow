@@ -5,6 +5,16 @@
   font-family: helvetica;
 }
 
+textarea.feed_item_text {
+  height: 200px;
+  background-color: #ccc;
+  outline-style: none;
+  width: 640px;
+  font-size: 24px;
+  border: none;
+  padding: 10px;
+}
+
 #buttons {
   width: 640px;
   margin-top: 10px;
@@ -29,6 +39,10 @@
   vertical-align: top;
   margin: 0;
 }
+
+#camera {
+  margin-bottom: 10px;
+}
 </style>
 
 <p class="instructions"><strong>Step 1</strong> Click below to take your picture.</p>
@@ -39,7 +53,7 @@
 
 <% form_for :feed_item, :url => { :action => :create } do |f| %>
 <%= f.hidden_field :snapshot_id %>
-<p class="instructions"><strong>Step 2</strong> Put a message in this box.</p>
+<p class="instructions"><strong>Step 2</strong> Type a message in this box.</p>
 <%= f.text_area :text, :class => 'feed_item_text' %>
 <div id="buttons"><button type="submit" id="send">Send</button></div>
 <% end %>
