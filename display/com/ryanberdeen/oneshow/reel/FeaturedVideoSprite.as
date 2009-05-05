@@ -1,4 +1,6 @@
 package com.ryanberdeen.oneshow.reel {
+  import com.ryanberdeen.oneshow.Main;
+
   import flash.display.Sprite;
   import flash.events.*;
   import flash.media.Video;
@@ -19,6 +21,7 @@ package com.ryanberdeen.oneshow.reel {
     private var buffered:Boolean;
     private var metadataReceived:Boolean;
     private var timer:Timer;
+    private var duration:Number;
 
     public function FeaturedVideoSprite(videoData:Object, controller:ReelController, displayWidth:int, displayHeight:int) {
       this.controller = controller;
@@ -32,7 +35,7 @@ package com.ryanberdeen.oneshow.reel {
       buffered = false;
       metadataReceived = false;
 
-      credit = new FeaturedItemCreditSprite(videoData);
+      credit = new FeaturedItemCreditSprite(videoData, displayWidth);
       credit.alpha = 0.5;
       credit.y = displayHeight - credit.height;
       addChild(credit);
@@ -60,7 +63,7 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     public function get nominalTime():int {
-      return 60000;
+      return duration;
     }
 
     public function get loadTime():int {
@@ -115,7 +118,7 @@ package com.ryanberdeen.oneshow.reel {
       video = new Video();
       video.smoothing = true;
       video.attachNetStream(stream);
-      stream.play(videoData.media_url);
+      stream.play(Main.resolveUrl(videoData.media_url));
       addChild(video);
 
       // TODO
@@ -149,6 +152,8 @@ package com.ryanberdeen.oneshow.reel {
           controller.itemReady();
         }
       }
+
+      this.duration = metadata.duration * 1000;
       metadataReceived = true;
     }
   }

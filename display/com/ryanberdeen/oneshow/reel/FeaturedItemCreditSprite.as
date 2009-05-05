@@ -21,6 +21,8 @@ package com.ryanberdeen.oneshow.reel {
 
       var textWidth:Number = 0;
 
+      var displayTextWidth = displayWidth - 20;
+
       var textY = 10;
 
       if (featureItem.title) {
@@ -28,7 +30,7 @@ package com.ryanberdeen.oneshow.reel {
         titleText.defaultTextFormat = textFormat;
         titleText.text = featureItem.title;
         // TODO dimension
-        titleText.width = titleText.textWidth + 5;
+        titleText.width = displayTextWidth;
         titleText.height = titleText.textHeight + 5;
         // TODO dimension
         titleText.x = 10;
@@ -45,7 +47,7 @@ package com.ryanberdeen.oneshow.reel {
         creditText.text = featureItem.credit;
         creditText.wordWrap = true;
         // TODO dimension
-        creditText.width = displayWidth;
+        creditText.width = displayTextWidth;
         creditText.height = creditText.textHeight + 5;
         // TODO dimension
         creditText.x = 10;
@@ -61,7 +63,7 @@ package com.ryanberdeen.oneshow.reel {
         linkText.defaultTextFormat = textFormat;
         linkText.text = featureItem.url;
         // TODO dimension
-        linkText.width = linkText.textWidth + 5;
+        linkText.width = displayTextWidth;
         linkText.height = linkText.textHeight + 5;
         // TODO dimension
         linkText.x = 10;
@@ -76,8 +78,11 @@ package com.ryanberdeen.oneshow.reel {
         textWidth += 20;
 
         textBackground.graphics.beginFill(0xFFFFFF);
-        // TODO dimension
-        textBackground.graphics.drawRect(0, 0, textWidth, height + 15);
+        var backgroundWidth = textWidth;
+        if (backgroundWidth / displayWidth > .8) {
+          backgroundWidth = displayWidth;
+        }
+        textBackground.graphics.drawRect(0, 0, backgroundWidth, height + 15);
         textBackground.graphics.endFill();
       }
     }

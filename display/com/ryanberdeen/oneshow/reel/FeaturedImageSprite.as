@@ -30,7 +30,7 @@ package com.ryanberdeen.oneshow.reel {
       imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
       addChild(imageLoader);
 
-      credit = new FeaturedItemCreditSprite(image);
+      credit = new FeaturedItemCreditSprite(image, displayWidth);
       credit.alpha = 0.5;
       credit.y = displayHeight - credit.height;
       addChild(credit);

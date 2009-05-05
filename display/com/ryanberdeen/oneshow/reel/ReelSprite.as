@@ -36,6 +36,8 @@ package com.ryanberdeen.oneshow.reel {
 
       jsonLoader = new JsonLoader(Main.baseUrl + 'reel_items.json', reelItemsLoaded);
       jsonLoader.load();
+
+      Main.connector.subscribe('reel', this);
     }
 
     private function start():void {
