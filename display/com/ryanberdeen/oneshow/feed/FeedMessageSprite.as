@@ -53,7 +53,12 @@ package com.ryanberdeen.oneshow.feed {
         text.width -= IMAGE_WIDTH + PADDING;
       }
       text.defaultTextFormat = textFormat;
-      text.text = message.text;
+      if (message.source == 'twitter') {
+        text.htmlText = message.text;
+      }
+      else {
+        text.text = message.text;
+      }
       text.wordWrap = true;
       text.height = text.textHeight + 5;
       addChild(text);
