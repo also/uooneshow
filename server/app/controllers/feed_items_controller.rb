@@ -5,7 +5,7 @@ class FeedItemsController < ApplicationController
     scope = FeedItem.visible
     scope = scope.since_id(params[:since_id]) if params[:since_id]
 
-    @feed_items = scope.all :order => 'created_at DESC, id DESC', :limit => 5
+    @feed_items = scope.all :order => 'created_at DESC, id DESC', :limit => 30
     @feed_items.reverse!
     respond_to do |format|
       format.html
@@ -24,13 +24,13 @@ class FeedItemsController < ApplicationController
 
   def create
     attributes = params[:feed_item]
-    if attributes[:snapshot_id].empty?
+    if attributes[:snapshot_id].blank?
       attributes[:source] ||= 'direct'
     else
       attributes[:source] ||= 'snapshot'
     end
     if @feed_item = FeedItem.create(attributes)
-      Display.send_message('display-feed new_message ' + @feed_item.to_json)
+      Display.send_message('display-feed new_message ' + @feed_item.to_json) unless @feed_item.text.empty?
       redirect_to new_feed_item_url
     else
       render :text => 'nope!'

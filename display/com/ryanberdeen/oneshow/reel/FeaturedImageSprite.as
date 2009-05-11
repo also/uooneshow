@@ -45,7 +45,7 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     public function get nominalTime():int {
-      return 10000;
+      return 15000;
     }
 
     public function get loadTime():int {
@@ -83,7 +83,8 @@ package com.ryanberdeen.oneshow.reel {
 
     private function ioErrorHandler(event:IOErrorEvent):void {
       // TODO
-      trace('io error: ' + event.text)
+      trace('io error: ' + event.text);
+      controller.itemReady();
     }
   }
 }

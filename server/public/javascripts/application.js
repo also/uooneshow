@@ -8,6 +8,10 @@ var initCamera = function(snapshotUrl) {
     event.stop();
     $('camera').takeSnapshot();
   });
+  $('shutter').observe('click', function(event) {
+    event.stop();
+    $('camera').takeSnapshot();
+  });
 };
 
 var snapshotPosted = function(snapshot) {

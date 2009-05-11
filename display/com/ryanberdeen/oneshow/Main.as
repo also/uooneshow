@@ -34,7 +34,7 @@ package com.ryanberdeen.oneshow {
 
     public function Main() {
       options = root.loaderInfo.parameters;
-      Main.baseUrl = options.baseUrl || 'http://localhost:3000/';
+      Main.baseUrl = options.baseUrl || 'http://ryan-berdeens-macbook-pro.local:3000/';
 
       opaqueBackground = 0xdbddde;
 
@@ -65,7 +65,7 @@ package com.ryanberdeen.oneshow {
 
     private function start():void {
       connector = new Connector();
-      connector.connect(options.connectorHost || 'localhost', options.connectorPort || 1843);
+      connector.connect(options.connectorHost || 'ryan-berdeens-macbook-pro.local', options.connectorPort || 1843);
 
       reelSprite = new ReelSprite(550, BODY_HEIGHT);
       reelSprite.x = 240;

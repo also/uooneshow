@@ -4,6 +4,24 @@
 * {
   font-family: helvetica;
 }
+h1 {
+  font-size: 44pt;
+  width: 1290px;
+  position: relative;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+#main {
+  width: 1290px;
+  position: relative;
+  margin: auto;
+}
+#right {
+  position: absolute;
+  top: 0px;
+  left: 650px;
+}
 
 textarea.feed_item_text {
   height: 200px;
@@ -13,6 +31,7 @@ textarea.feed_item_text {
   font-size: 24px;
   border: none;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 #buttons {
@@ -28,7 +47,8 @@ textarea.feed_item_text {
   margin: 0;
 }
 
-#send {
+#send,
+#shutter {
   float: right;
   background-color: #000;
   color: #fff;
@@ -41,22 +61,41 @@ textarea.feed_item_text {
 }
 
 #camera {
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
+}
+
+#snapshot {
+  width: 160px;
+  height: 120px;
+  background: #ccc;
+}
+
+#snapshot img {
+  width: 160px;
+  height: 120px;
 }
 </style>
-
-<p class="instructions"><strong>Step 1</strong> Click below to take your picture.</p>
+<h1>Put yourself on our screen.</h1>
+<div id="main">
+<div id="left">
+<p class="instructions"><strong>Step 1</strong> Take your picture.</p>
 <div id="camera"></div>
+<div id="buttons"><button type="submit" id="shutter">Take Picture</button></div>
 
 <div class="feed_item_wrapper">
-<div class="snapshot" id="snapshot" style="display:none"></div>
+</div>
 
+<div id="right">
 <% form_for :feed_item, :url => { :action => :create } do |f| %>
 <%= f.hidden_field :snapshot_id %>
 <p class="instructions"><strong>Step 2</strong> Type a message in this box.</p>
 <%= f.text_area :text, :class => 'feed_item_text' %>
+
+<div class="instructions"><strong>Step 3</strong> Send it to us!</div>
 <div id="buttons"><button type="submit" id="send">Send</button></div>
+<div class="snapshot" id="snapshot"></div>
 <% end %>
 </div>
-
+</div>
+</div>
 <%= javascript_tag "initCamera(#{snapshots_url.to_json});" %>

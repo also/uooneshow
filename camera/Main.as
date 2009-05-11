@@ -50,7 +50,6 @@ package {
       stage.addEventListener(MouseEvent.CLICK, onClick);
 
       ExternalInterface.addCallback('takeSnapshot', takeSnapshot);
-      ExternalInterface.addCallback('takeSnapshot', clearSnapshot);
       ExternalInterface.addCallback('showCameraSettings', showCameraSettings);
       ExternalInterface.addCallback('showPrivacySettings', showPrivacySettings);
       ExternalInterface.addCallback('setReversed', setReversed);
@@ -158,7 +157,7 @@ package {
       var bitmap:BitmapData = captureSnapshot();
       var bytes:ByteArray = PNGEncoder.encode(bitmap);
 
-      showSnapshot(bitmap);
+      //showSnapshot(bitmap);
 
       sendSnapshot(bytes);
       return true;

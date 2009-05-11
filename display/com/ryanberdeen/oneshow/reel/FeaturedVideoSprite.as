@@ -103,6 +103,8 @@ package com.ryanberdeen.oneshow.reel {
         case 'NetStream.Play.StreamNotFound':
           // TODO
           trace("Unable to locate video: " + videoData.media_url);
+          this.duration = 0;
+          controller.itemReady();
           break;
       }
     }
