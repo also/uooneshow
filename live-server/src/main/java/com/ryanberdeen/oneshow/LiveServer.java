@@ -28,7 +28,7 @@ public class LiveServer extends RjsHandlerAdapter {
 	public void clientConnected(RjsClient client) throws Exception {
 		client.setAttribute(CLIENT_PATHS_KEY, new CopyOnWriteArraySet<String>());
 		clients.add(client);
-		forwardMessage(null, "server-listener client-connected " + client.getRemoteAddress());
+		forwardMessage(null, "server_event client_connected " + client.getRemoteAddress());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public class LiveServer extends RjsHandlerAdapter {
 			subscribers.get(path).remove(client);
 		}
 		clients.remove(client);
-		forwardMessage(null, "server-listener client-disconnected " + client.getRemoteAddress());
+		forwardMessage(null, "server_event client_disconnected " + client.getRemoteAddress());
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class LiveServer extends RjsHandlerAdapter {
 				subscribe(parts[i], client);
 			}
 		}
-		else if ("list-clients".equals(parts[0])) {
+		else if ("list_clients".equals(parts[0])) {
 			StringBuilder result = new StringBuilder();
 			for (RjsClient c : clients) {
 				result.append(c.getRemoteAddress());

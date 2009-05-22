@@ -8,7 +8,7 @@ package com.ryanberdeen.oneshow.support {
   public class Connector {
     private var socket:XMLSocket;
     private var started:Boolean = false;
-    private var pathPrefix:String = 'display-';
+    private var pathPrefix:String = 'display_';
     private var actionPrefix = 'handle_';
     private var subscribers:Object = {};
 
@@ -64,7 +64,7 @@ package com.ryanberdeen.oneshow.support {
     }
 
     public function sendEvent(source:String, event:String):void {
-      send(pathPrefix + source + '-event ' + event);
+      send(pathPrefix + source + '_event ' + event);
     }
 
     public function notifySubscriber(subscriber:Object, message:String):void {
