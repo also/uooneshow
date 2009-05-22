@@ -14,6 +14,7 @@ package com.ryanberdeen.oneshow.reel {
 
     public var items:Array;
     private var currentItem:Object;
+    private var currentPart:Object;
     private var currentPartSprite:Sprite;
     private var nextPartSprite:Sprite;
     private var currentItemIndex:int;
@@ -94,16 +95,16 @@ package com.ryanberdeen.oneshow.reel {
         currentItem = items[currentItemIndex];
         currentPartIndex = 0;
       }
-      var part:Object = currentItem.parts[currentPartIndex];
+      currentPart = currentItem.parts[currentPartIndex];
       trace('currentItemIndex: ' + currentItemIndex);
       trace('currentPartIndex: ' + currentPartIndex);
 
-      switch(part.media_type) {
+      switch(currentPart.media_type) {
         case 'image':
-          nextPartSprite = new FeaturedImageSprite(part, this, displayWidth, displayHeight);
+          nextPartSprite = new FeaturedImageSprite(currentPart, this, displayWidth, displayHeight);
           break;
         case 'video':
-          nextPartSprite = new FeaturedVideoSprite(part, this, displayWidth, displayHeight);
+          nextPartSprite = new FeaturedVideoSprite(currentPart, this, displayWidth, displayHeight);
           break;
         default:
           // TODO
@@ -120,6 +121,7 @@ package com.ryanberdeen.oneshow.reel {
       currentPartSprite = nextPartSprite;
       addChild(currentPartSprite);
       ReelItem(currentPartSprite).start();
+      Main.connector.sendEvent('reel', 'displayed {"reel_item_id":' + currentItem.id + ',"reel_item_part_id":' + currentPart.id +'}');
 
       creditSprite = new FeaturedItemCreditSprite(currentItem, displayWidth);
       creditSprite.alpha = 0.5;

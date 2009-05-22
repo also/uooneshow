@@ -63,6 +63,10 @@ package com.ryanberdeen.oneshow.support {
       }
     }
 
+    public function sendEvent(source:String, event:String):void {
+      send(pathPrefix + source + '-event ' + event);
+    }
+
     public function notifySubscriber(subscriber:Object, message:String):void {
       var spaceIndex:int = message.indexOf(' ');
       var actionSuffix:String;

@@ -3,6 +3,6 @@ class ReelItem < ActiveRecord::Base
 
   def to_json(options)
     # TODO add to existing options
-    super(:include => {:parts => {:only => [:media_type, :media_url, :position]}})
+    super(:include => {:parts => {:only => [:id, :media_type, :media_url, :position]}})
   end
 end
