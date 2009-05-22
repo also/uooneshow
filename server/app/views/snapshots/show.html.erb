@@ -1,1 +1,5 @@
 <img src="<%= @snapshot.image_url %>" alt="Snapshot <%= @snapshot.id %>"/>
+
+<% if @snapshot.feed_item %>
+<p><%=h @snapshot.feed_item.text %></p>
+<% end %>

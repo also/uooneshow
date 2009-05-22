@@ -1,4 +1,5 @@
 class Snapshot < ActiveRecord::Base
+  has_one :feed_item
   attr_writer :data
 
   def after_create
