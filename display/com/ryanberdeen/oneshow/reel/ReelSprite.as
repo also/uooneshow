@@ -121,7 +121,7 @@ package com.ryanberdeen.oneshow.reel {
       currentPartSprite = nextPartSprite;
       addChild(currentPartSprite);
       ReelItem(currentPartSprite).start();
-      Main.connector.sendEvent('reel', 'displayed {"reel_item_id":' + currentItem.id + ',"reel_item_part_id":' + currentPart.id +'}');
+      Main.connector.sendEvent('reel', 'displayed', {reel_item_id: currentItem.id, reel_item_part_id: currentPart.id});
 
       creditSprite = new FeaturedItemCreditSprite(currentItem, displayWidth);
       creditSprite.alpha = 0.5;
@@ -141,6 +141,17 @@ package com.ryanberdeen.oneshow.reel {
         timer.stop();
       }
       ReelItem(currentPartSprite).stop();
+    }
+
+    public function handle_advance(message:String):void {
+      if (timer != null) {
+        timer.stop();
+      }
+      timer = null;
+      timeExpired = true;
+      if (nextPartReady) {
+        advance();
+      }
     }
   }
 }

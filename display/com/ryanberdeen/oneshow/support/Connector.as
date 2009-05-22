@@ -1,4 +1,6 @@
 package com.ryanberdeen.oneshow.support {
+  import com.adobe.serialization.json.JSON;
+
   import flash.events.DataEvent;
   import flash.events.Event;
   import flash.events.IOErrorEvent;
@@ -63,8 +65,20 @@ package com.ryanberdeen.oneshow.support {
       }
     }
 
-    public function sendEvent(source:String, event:String):void {
-      send(pathPrefix + source + '_event ' + event);
+    public function sendEvent(source:String, ...args:Array):void {
+      var eventString:String = '';
+      for each (var arg in args) {
+        if (eventString != '') {
+          eventString += ' ';
+        }
+        if (arg is String) {
+          eventString += arg;
+        }
+        else {
+          eventString += JSON.encode(arg);
+        }
+      }
+      send(pathPrefix + source + '_event ' + eventString);
     }
 
     public function notifySubscriber(subscriber:Object, message:String):void {
