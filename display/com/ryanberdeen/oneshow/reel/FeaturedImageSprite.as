@@ -16,7 +16,6 @@ package com.ryanberdeen.oneshow.reel {
     private var controller:ReelController;
     private var displayWidth:int;
     private var displayHeight:int;
-    private var credit:FeaturedItemCreditSprite;
 
     private var imageLoader:Loader;
 
@@ -29,11 +28,6 @@ package com.ryanberdeen.oneshow.reel {
       imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
       imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
       addChild(imageLoader);
-
-      credit = new FeaturedItemCreditSprite(image, displayWidth);
-      credit.alpha = 0.5;
-      credit.y = displayHeight - credit.height;
-      addChild(credit);
     }
 
     public function start():void {

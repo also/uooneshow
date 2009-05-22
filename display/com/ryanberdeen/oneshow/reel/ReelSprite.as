@@ -10,6 +10,7 @@ package com.ryanberdeen.oneshow.reel {
   public class ReelSprite extends Sprite implements ReelController {
     private var displayWidth:int;
     private var displayHeight:int;
+    private var creditSprite:FeaturedItemCreditSprite;
 
     public var items:Array;
     private var currentItem:Object;
@@ -113,11 +114,17 @@ package com.ryanberdeen.oneshow.reel {
       if (currentPartSprite != null) {
         ReelItem(currentPartSprite).stop();
         removeChild(currentPartSprite);
+        removeChild(creditSprite);
       }
 
       currentPartSprite = nextPartSprite;
       addChild(currentPartSprite);
       ReelItem(currentPartSprite).start();
+
+      creditSprite = new FeaturedItemCreditSprite(currentItem, displayWidth);
+      creditSprite.alpha = 0.5;
+      creditSprite.y = displayHeight - creditSprite.height;
+      addChild(creditSprite);
 
       timeExpired = false;
       timer = new Timer(ReelItem(currentPartSprite).nominalTime, 1);
