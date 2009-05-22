@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  reel_item_id: 1
+  media_url: MyString
+  media_type: MyString
+  position: 1
+
+two:
+  reel_item_id: 1
+  media_url: MyString
+  media_type: MyString
+  position: 1

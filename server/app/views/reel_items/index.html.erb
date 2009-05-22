@@ -2,22 +2,28 @@
 <table>
   <thead><tr>
     <th>ID</th>
-    <th>type</th>
-    <th>file</th>
     <th>Title</th>
     <th>Credit</th>
     <th>URL</th>
     <th>Order</th>
+    <th>type</th>
+    <th>file</th>
   </tr></thead>
-<% @reel_items.each do |reel_item| %>
-  <tr>
+<% @reel_items.each_with_index do |reel_item, i| %>
+  <tr class="<%= i.even? ? 'even' : 'odd' %>">
     <td><%= reel_item.id %></td>
-    <td><%= reel_item.media_type %></td>
-    <td><%= reel_item.media_url %></td>
     <td><%= reel_item.title %></td>
     <td><%= reel_item.credit %></td>
     <td><%= reel_item.url %></td>
-    <td><%= reel_item.position %></td>
+    <td colspan="3">&nbsp;</td>
   </tr>
+  <% reel_item.parts.each do |part| %>
+  <tr class="<%= i.even? ? 'even' : 'odd' %>">
+    <td colspan="4">&nbsp;</td>
+    <td><%= part.position %></td>
+    <td><%= part.media_type %></td>
+    <td><%= part.media_url %></td>
+  </tr>
+  <% end %>
 <% end %>
 </table>

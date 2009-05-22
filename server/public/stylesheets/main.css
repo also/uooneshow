@@ -1,0 +1,10 @@
+table {
+	border-collapse: collapse;
+}
+
+td {
+	margin: 0;
+}
+tr.odd td {
+	background-color: #ccc;
+}

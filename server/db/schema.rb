@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090522011428) do
+ActiveRecord::Schema.define(:version => 20090522015607) do
 
   create_table "feed_items", :force => true do |t|
     t.string   "text"
@@ -25,15 +25,24 @@ ActiveRecord::Schema.define(:version => 20090522011428) do
     t.boolean  "hidden",            :default => false, :null => false
   end
 
+  create_table "reel_item_parts", :force => true do |t|
+    t.integer  "reel_item_id", :null => false
+    t.string   "media_url",    :null => false
+    t.string   "media_type",   :null => false
+    t.integer  "position",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reel_item_parts", ["reel_item_id"], :name => "index_reel_item_parts_on_reel_item_id"
+
   create_table "reel_items", :force => true do |t|
     t.string   "slug"
     t.string   "title"
     t.string   "credit"
     t.string   "url"
-    t.string   "media_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "media_type"
     t.integer  "position"
   end
 
