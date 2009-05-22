@@ -1,4 +1,4 @@
 <% @snapshots.each do |snapshot| %><p>
-  <img src="<%= snapshot.path %>" alt="Snapshot <%= snapshot.id %>"/>
+  <%= link_to image_tag(snapshot.image_url), snapshot_url(snapshot) %>
 </p>
 <% end %>

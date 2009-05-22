@@ -8,4 +8,8 @@ class Snapshot < ActiveRecord::Base
   def path
     "/snapshots/#{id}.png"
   end
+
+  def image_url
+    url || path
+  end
 end

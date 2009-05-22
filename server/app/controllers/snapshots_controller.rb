@@ -7,4 +7,8 @@ class SnapshotsController < ApplicationController
     @snapshot = Snapshot.create :data => request.body.string
     render :json => @snapshot
   end
+
+  def show
+    @snapshot = Snapshot.find params[:id]
+  end
 end
