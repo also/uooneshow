@@ -12,16 +12,18 @@ package com.ryanberdeen.oneshow.reel {
     private var displayHeight:int;
 
     public var items:Array;
-    private var currentItemSprite:Sprite;
-    private var nextItemSprite:Sprite;
+    private var currentItem:Object;
+    private var currentPartSprite:Sprite;
+    private var nextPartSprite:Sprite;
     private var currentItemIndex:int;
+    private var currentPartIndex:int;
     private var timer:Timer;
 
     private var timeExpired:Boolean;
-    private var nextItemReady:Boolean;
-    private var currentItemFinished:Boolean;
+    private var nextPartReady:Boolean;
+    private var currentPartFinished:Boolean;
 
-    private var itemDisplayTime:int = 5000;
+    private var partDisplayTime:int = 5000;
     private var jsonLoader:JsonLoader;
 
     public function ReelSprite(displayWidth:int, displayHeight:int) {
@@ -35,20 +37,22 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     private function start():void {
-      currentItemIndex = -1;
+      currentItemIndex = 0;
+      currentItem = items[0];
+      currentPartIndex = -1;
       timeExpired = true;
-      prepareNextItem();
+      prepareNextPart();
     }
 
     public function pause():void {
-      ReelItem(currentItemSprite).pause();
+      ReelItem(currentPartSprite).pause();
       if (timer != null) {
         //timer.pause();
       }
     }
 
     public function resume():void {
-      ReelItem(currentItemSprite).resume();
+      ReelItem(currentPartSprite).resume();
       if (timer != null) {
         //timer.resume();
       }
@@ -59,15 +63,15 @@ package com.ryanberdeen.oneshow.reel {
       start();
     }
 
-    public function itemReady():void {
-      nextItemReady = true;
+    public function partReady():void {
+      nextPartReady = true;
       if (timeExpired) {
         advance();
       }
     }
 
-    public function itemFinished():void {
-      //currentItemFinished = true;
+    public function partFinished():void {
+      //currentPartFinished = true;
       //if (timer != null) {
       //  timer.stop();
       //}
@@ -77,23 +81,28 @@ package com.ryanberdeen.oneshow.reel {
     private function timerHandler(e:Event):void {
       timer = null;
       timeExpired = true;
-      if (nextItemReady) {
+      if (nextPartReady) {
         advance();
       }
     }
 
-    private function prepareNextItem():void {
-      nextItemReady = false;
-      currentItemIndex = (currentItemIndex + 1) % items.length;
+    private function prepareNextPart():void {
+      nextPartReady = false;
+      if (++currentPartIndex >= currentItem.parts.length) {
+        currentItemIndex = (currentItemIndex + 1) % items.length;
+        currentItem = items[currentItemIndex];
+        currentPartIndex = 0;
+      }
+      var part:Object = currentItem.parts[currentPartIndex];
+      trace('currentItemIndex: ' + currentItemIndex);
+      trace('currentPartIndex: ' + currentPartIndex);
 
-      var item:Object = items[currentItemIndex];
-
-      switch(item.media_type) {
+      switch(part.media_type) {
         case 'image':
-          nextItemSprite = new FeaturedImageSprite(item, this, displayWidth, displayHeight);
+          nextPartSprite = new FeaturedImageSprite(part, this, displayWidth, displayHeight);
           break;
         case 'video':
-          nextItemSprite = new FeaturedVideoSprite(item, this, displayWidth, displayHeight);
+          nextPartSprite = new FeaturedVideoSprite(part, this, displayWidth, displayHeight);
           break;
         default:
           // TODO
@@ -101,28 +110,28 @@ package com.ryanberdeen.oneshow.reel {
     }
 
     private function advance():void {
-      if (currentItemSprite != null) {
-        ReelItem(currentItemSprite).stop();
-        removeChild(currentItemSprite);
+      if (currentPartSprite != null) {
+        ReelItem(currentPartSprite).stop();
+        removeChild(currentPartSprite);
       }
 
-      currentItemSprite = nextItemSprite;
-      addChild(currentItemSprite);
-      ReelItem(currentItemSprite).start();
+      currentPartSprite = nextPartSprite;
+      addChild(currentPartSprite);
+      ReelItem(currentPartSprite).start();
 
       timeExpired = false;
-      timer = new Timer(ReelItem(currentItemSprite).nominalTime, 1);
+      timer = new Timer(ReelItem(currentPartSprite).nominalTime, 1);
       timer.addEventListener('timer', timerHandler);
       timer.start();
 
-      prepareNextItem();
+      prepareNextPart();
     }
 
     public function stop():void {
       if (timer != null) {
         timer.stop();
       }
-      ReelItem(currentItemSprite).stop();
+      ReelItem(currentPartSprite).stop();
     }
   }
 }

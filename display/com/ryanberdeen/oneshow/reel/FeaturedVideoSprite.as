@@ -82,7 +82,7 @@ package com.ryanberdeen.oneshow.reel {
 
       if (buffered) {
         if (!this.buffered && metadataReceived) {
-          controller.itemReady();
+          controller.partReady();
         }
         this.buffered = true;
       }
@@ -98,13 +98,13 @@ package com.ryanberdeen.oneshow.reel {
           stream.pause();
           break;
         case 'NetStream.Play.Stop':
-          controller.itemFinished();
+          controller.partFinished();
           break;
         case 'NetStream.Play.StreamNotFound':
           // TODO
           trace("Unable to locate video: " + videoData.media_url);
           this.duration = 0;
-          controller.itemReady();
+          controller.partReady();
           break;
       }
     }
@@ -151,7 +151,7 @@ package com.ryanberdeen.oneshow.reel {
         video.x = (displayWidth - video.width) / 2;
         video.y = (displayHeight - video.height) / 2;
         if (buffered) {
-          controller.itemReady();
+          controller.partReady();
         }
       }
 

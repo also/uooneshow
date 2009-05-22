@@ -78,13 +78,13 @@ package com.ryanberdeen.oneshow.reel {
       image.x = (displayWidth - image.width) / 2;
       image.y = (displayHeight - image.height) / 2;
 
-      controller.itemReady();
+      controller.partReady();
     }
 
     private function ioErrorHandler(event:IOErrorEvent):void {
       // TODO
       trace('io error: ' + event.text);
-      controller.itemReady();
+      controller.partReady();
     }
   }
 }
