@@ -26,11 +26,15 @@ package com.ryanberdeen.oneshow.support {
     }
 
     public function send(data:String):void {
-      socket.send(data);
+      if (socket.connected) {
+        socket.send(data);
+      }
     }
 
     public function close():void {
-      socket.close();
+      if (socket.connected) {
+        socket.close();
+      }
     }
 
     private function onSocketConnect(event:Event):void {
@@ -41,15 +45,14 @@ package com.ryanberdeen.oneshow.support {
         send('server subscribe ' + path);
       }
       subscribe('connector', this);
-      doCallback('onSocketConnect');
+      onEvent(event);
     }
 
     private function onSocketSecurityError(event:SecurityErrorEvent):void {
-      doCallback('onSocketSecurityError');
+      onEvent(event);
     }
 
     private function onSocketData(event:DataEvent):void {
-      trace('received: ' + event.data);
       var message:String = event.data;
       var spaceIndex:int = message.indexOf(' ');
       var path:String = message.substring(0, spaceIndex);
@@ -103,16 +106,16 @@ package com.ryanberdeen.oneshow.support {
     }
 
     private function onSocketIoError(event:IOErrorEvent):void {
-      doCallback('onSocketIoError');
+      onEvent(event);
     }
 
     // NOTE: only called when the server closes the connection
     private function onSocketClose(event:Event):void {
-      doCallback('onSocketClose');
+      onEvent(event);
     }
 
-    private function doCallback(callback:String):void {
-      trace('callback: ' + callback);
+    private function onEvent(event:Event):void {
+      trace('socket event: ' + event.type);
     }
 
     public function subscribe(pathSuffix:String, subscriber:Object):void {
